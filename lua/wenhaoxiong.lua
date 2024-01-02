@@ -56,6 +56,7 @@ lspconfig.rust_analyzer.setup {
     capabilities = capabilities, 
     on_attach = function()
         vim.keymap.set('n', '<leader>cmr', "<cmd>!cargo run<CR>")
+        vim.keymap.set('n', '<leader>cmt', "<cmd>!cargo test<CR>")
     end,
 
     -- Server-specific settings. See `:help lspconfig-setup`
