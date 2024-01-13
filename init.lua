@@ -1,5 +1,6 @@
 require("remap")
-require("plugins")
+require("plugin")
+require("colorschme_neotree")
 
 vim.opt.nu = true
 vim.opt.wrap = false
@@ -22,6 +23,8 @@ vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 
 vim.opt.signcolumn = "yes"
+
+vim.opt.termguicolors = true
 
 -- highlight yank
 local augroup = vim.api.nvim_create_augroup

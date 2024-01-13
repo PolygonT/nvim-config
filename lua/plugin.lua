@@ -1,8 +1,5 @@
 vim.cmd [[packadd packer.nvim]]
 
-require("plugins/auto_pairs")
-require("plugins/comments")
-
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -58,6 +55,15 @@ return require('packer').startup(function(use)
             "MunifTanjim/nui.nvim",
             -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
         }
+    }
+
+    -- colorschme
+    use {
+        'sainnhe/everforest',
+        config = function()
+            vim.cmd('set background=dark')
+            vim.cmd('colorscheme everforest')
+        end
     }
 
 end)
