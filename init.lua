@@ -1,6 +1,6 @@
 require("remap")
 require("plugin")
-require("colorschme_neotree")
+require("wenhaoxiong")
 
 vim.opt.nu = true
 vim.opt.wrap = false
@@ -30,6 +30,7 @@ vim.opt.termguicolors = true
 local augroup = vim.api.nvim_create_augroup
 local yank_group = augroup('HighlightYank', {})
 local autocmd = vim.api.nvim_create_autocmd
+
 
 autocmd('TextYankPost', {
     group = yank_group,

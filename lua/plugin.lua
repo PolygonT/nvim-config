@@ -9,7 +9,7 @@ return require('packer').startup(function(use)
 	-- Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	-- Plug 'junegunn/fzf.vim'
 
-	use 'morhetz/gruvbox'
+	-- use 'morhetz/gruvbox'
 
 	-- Use release branch (recommended)
 	-- Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,6 +65,25 @@ return require('packer').startup(function(use)
             vim.cmd('colorscheme everforest')
         end
     }
+
+    -- telescope
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        -- or                            , branch = '0.1.x',
+        requires = { {'nvim-lua/plenary.nvim'} }
+    }
+
+    -- treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
+
+    use({
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        requires = "nvim-treesitter/nvim-treesitter",
+    })
 
 end)
 

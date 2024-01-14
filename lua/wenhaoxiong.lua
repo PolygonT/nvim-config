@@ -18,8 +18,8 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
@@ -76,8 +76,8 @@ lspconfig.rust_analyzer.setup {
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>dk', vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<leader>dj', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist)
 
 -- Use LspAttach autocommand to only map the following keys

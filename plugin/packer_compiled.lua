@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1692716794/share/lua/5.1/?.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1692716794/share/lua/5.1/?/init.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1692716794/lib/luarocks/rocks-5.1/?.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1692716794/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1692716794/lib/lua/5.1/?.so"
+local package_path_str = "/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?/init.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?.lua;/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/wenhaoxiong/.cache/nvim/packer_hererocks/2.1.1703358377/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -105,11 +105,6 @@ _G.packer_plugins = {
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/everforest",
     url = "https://github.com/sainnhe/everforest"
   },
-  gruvbox = {
-    loaded = true,
-    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/gruvbox",
-    url = "https://github.com/morhetz/gruvbox"
-  },
   ["neo-tree.nvim"] = {
     loaded = true,
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/neo-tree.nvim",
@@ -135,6 +130,18 @@ _G.packer_plugins = {
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-treesitter-textobjects"] = {
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -149,6 +156,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   undotree = {
     loaded = true,
@@ -172,6 +184,11 @@ time([[Defining packer_plugins]], false)
 time([[Config for everforest]], true)
 try_loadstring("\27LJ\2\n^\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0\27colorscheme everforest\24set background=dark\bcmd\bvim\0", "config", "everforest")
 time([[Config for everforest]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-treesitter ]]
+vim.cmd [[ packadd nvim-treesitter-textobjects ]]
+time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
