@@ -21,3 +21,6 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 -- escape terminal mode
 vim.keymap.set("t", "<C-t>", "<C-\\><C-n>") 
 
+-- quickfix list remap
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<cr>") 
+vim.keymap.set("n", "<C-k>", "<cmd>cprev<cr>") 
