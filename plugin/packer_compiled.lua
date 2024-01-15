@@ -105,6 +105,11 @@ _G.packer_plugins = {
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/everforest",
     url = "https://github.com/sainnhe/everforest"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
   ["neo-tree.nvim"] = {
     loaded = true,
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/neo-tree.nvim",
@@ -166,11 +171,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/undotree",
     url = "https://github.com/mbbill/undotree"
-  },
-  ["vim-airline"] = {
-    loaded = true,
-    path = "/home/wenhaoxiong/.local/share/nvim/site/pack/packer/start/vim-airline",
-    url = "https://github.com/vim-airline/vim-airline"
   },
   ["vim-fugitive"] = {
     loaded = true,

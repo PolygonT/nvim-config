@@ -14,7 +14,12 @@ return require('packer').startup(function(use)
 	-- Use release branch (recommended)
 	-- Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	-- Plug 'honza/vim-snippets'
-	use 'vim-airline/vim-airline'
+
+    --use 'vim-airline/vim-airline'
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
 
 	-- Plug '~/share-dir/wenhaoxiong/test-plugin'
 	--
@@ -45,6 +50,8 @@ return require('packer').startup(function(use)
 	-- comments
 	use 'numToStr/Comment.nvim'
 
+    -- devicons
+    use 'nvim-tree/nvim-web-devicons'
     -- neo tree
     use {
         "nvim-neo-tree/neo-tree.nvim",
