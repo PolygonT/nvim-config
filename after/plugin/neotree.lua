@@ -100,11 +100,12 @@ require("neo-tree").setup({
                 nowait = true,
             },
             mappings = {
-                ["t"] = { 
-                    "toggle_node", 
-                    nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
-                },
+                -- ["<cr>"] = { 
+                --     "toggle_node", 
+                --     nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+                -- },
                 ["<2-LeftMouse>"] = "open",
+                ["t"] = "open",
                 ["<cr>"] = "open",
                 ["<esc>"] = "cancel", -- close preview or floating neo-tree window
                 ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },

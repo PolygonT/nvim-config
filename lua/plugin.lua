@@ -92,6 +92,20 @@ return require('packer').startup(function(use)
         requires = "nvim-treesitter/nvim-treesitter",
     })
 
+    -- markdown preview
+    -- install without yarn or npm
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
+
+    -- harpoon
+    use {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        requires = { {"nvim-lua/plenary.nvim"} }
+    }
+
 end)
 
 
