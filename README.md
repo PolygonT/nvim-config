@@ -4,3 +4,4 @@
 - [ ] git commit get last commit message
 - [ ] git rollback current file changes
 - [ ] git reset
+- [ ] config diagonost list lint to telescope
