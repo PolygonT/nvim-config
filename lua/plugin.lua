@@ -106,6 +106,9 @@ return require('packer').startup(function(use)
         requires = { {"nvim-lua/plenary.nvim"} }
     }
 
+    -- translate
+	use 'uga-rosa/translate.nvim'
+
 end)
 
 

@@ -44,14 +44,15 @@ cmp.setup.filetype('gitcommit', {
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-
-
+local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
+snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
+
+-- rust_analyzer
 lspconfig.rust_analyzer.setup {
     capabilities = capabilities, 
     on_attach = function()
@@ -63,6 +64,11 @@ lspconfig.rust_analyzer.setup {
     settings = {
         ['rust-analyzer'] = {},
     },
+}
+
+-- html
+lspconfig.html.setup{
+    capabilities = snippet_capabilities,
 }
 
 -- lspconfig.jdtls.setup{
