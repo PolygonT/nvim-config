@@ -40,6 +40,7 @@ return require('packer').startup(function(use)
 
 	-- git Support
 	use 'tpope/vim-fugitive'
+    use 'lewis6991/gitsigns.nvim'
 
 	-- undo tree
 	use 'mbbill/undotree'
