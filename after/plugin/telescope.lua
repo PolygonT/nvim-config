@@ -7,7 +7,7 @@ vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>ph', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>pm', function ()
     builtin.git_commits({
-        git_command = { "git", "log", "--graph" }
+        git_command = { "git", "log", "--pretty=format:%C(auto)%h%d %s %C(bold black)(%ar by <%aN>)%Creset" }
     })
 end, {})
 
