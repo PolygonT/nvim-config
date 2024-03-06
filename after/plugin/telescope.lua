@@ -5,6 +5,11 @@ vim.keymap.set('n', '<leader>pc', builtin.current_buffer_fuzzy_find, {})
 vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>ph', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>pm', function ()
+    builtin.git_commits({
+        git_command = { "git", "log", "--graph" }
+    })
+end, {})
 
 require('telescope').setup{
   defaults = {

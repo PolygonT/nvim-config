@@ -71,6 +71,9 @@ lspconfig.html.setup{
     capabilities = snippet_capabilities,
 }
 
+-- lua
+lspconfig.lua_ls.setup{}
+
 -- lspconfig.jdtls.setup{
 -- }
 
