@@ -1,15 +1,4 @@
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>pf', builtin.git_files, {})
-vim.keymap.set('n', '<leader>psf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>pc', builtin.current_buffer_fuzzy_find, {})
-vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>ph', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>pm', function ()
-    builtin.git_commits({
-        git_command = { "git", "log", "--pretty=format:%C(auto)%h%d %s %C(bold black)(%ar by <%aN>)%Creset" }
-    })
-end, {})
+local actions = require "telescope.actions"
 
 require('telescope').setup{
   defaults = {
@@ -31,6 +20,15 @@ require('telescope').setup{
     }
   },
   pickers = {
+      git_branches = {
+          mappings = {
+              i = {
+                  ["<c-m>"] = actions.git_delete_branch,
+                  ["<c-d>"] = actions.preview_scrolling_down,
+                  ["<cr>"] = actions.git_switch_branch,
+              }
+      ,    }
+      }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,
