@@ -52,6 +52,11 @@ snippet_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 
+-- jdtls
+lspconfig.jdtls.setup{
+    capabilities = capabilities, 
+}
+
 -- rust_analyzer
 lspconfig.rust_analyzer.setup {
     capabilities = capabilities, 
