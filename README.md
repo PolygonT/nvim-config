@@ -6,3 +6,4 @@
 - [ ] git reset
 - [ ] config diagonost list lint to telescope
 - [ ] telescope git log <leader>pib show specific date
+- [ ] reload project

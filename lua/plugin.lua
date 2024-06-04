@@ -110,6 +110,9 @@ return require('packer').startup(function(use)
     -- translate
 	use 'uga-rosa/translate.nvim'
 
+    -- jdtls
+    use 'mfussenegger/nvim-jdtls'
+
 end)
 
 
