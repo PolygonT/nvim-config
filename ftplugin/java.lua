@@ -66,10 +66,20 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {}
+      bundles = {
+          vim.fn.glob("/home/wenhaoxiong/software/debugger/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.52.0.jar", 1)
+      };
   },
 }
+
+vim.keymap.set("n", "<F5>", function() 
+    require('jdtls.dap').setup_dap_main_class_configs()
+end)
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(config)
+require('dapui').setup()
+require('nvim-dap-virtual-text').setup()
+
 

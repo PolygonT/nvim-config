@@ -113,6 +113,16 @@ return require('packer').startup(function(use)
     -- jdtls
     use 'mfussenegger/nvim-jdtls'
 
+    -- dap
+    use {
+        'mfussenegger/nvim-dap',
+        requires = {
+            {'rcarriga/nvim-dap-ui'},
+            {'theHamsta/nvim-dap-virtual-text'},
+            {'nvim-neotest/nvim-nio'}
+        }
+    }
+
 end)
 
 
