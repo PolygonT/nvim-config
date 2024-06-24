@@ -83,6 +83,13 @@ lspconfig.lua_ls.setup{}
 -- lspconfig.jdtls.setup{
 -- }
 
+-- php
+lspconfig.phan.setup{}
+
+-- clangd
+lspconfig.clangd.setup{
+    cmd = { "clangd-17" }
+}
 
 
 
