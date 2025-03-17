@@ -123,6 +123,17 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- unreal egine support
+    -- use {
+    --     'zadirion/Unreal.nvim',
+    --     requires =
+    --     {
+    --         {"tpope/vim-dispatch"}
+    --     }
+    -- }
+    --
+
+    use '/home/wenhaoxiong/workspace/neovim/ue.nvim'
 end)
 
 

@@ -42,3 +42,9 @@ autocmd('TextYankPost', {
         })
     end,
 })
+
+function P(table)
+    for _, data in ipairs(table) do
+        print(data)
+    end
+end

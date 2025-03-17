@@ -88,8 +88,45 @@ lspconfig.phan.setup{}
 
 -- clangd
 lspconfig.clangd.setup{
-    cmd = { "clangd-17" }
+    capabilities = capabilities,
+    cmd = { "clangd-15" }
 }
+
+-- nvim dap
+local dap = require('dap')
+local dapui = require('dapui')
+dapui.setup()
+require('nvim-dap-virtual-text').setup()
+
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = '/home/wenhaoxiong/software/debug-adapters/cpptool/extension/debugAdapters/bin/OpenDebugAD7',
+}
+
+dap.configurations.cpp = {
+    {
+        name = "cpptool server",
+        type = "cppdbg",
+        request = "launch",
+        cwd = '${workspaceFolder}',
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        stopAtEntry = true,
+    }
+}
+
+-- dap keymaps
+
+vim.keymap.set('n', '<leader>do', dapui.toggle)
+vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint)
+vim.keymap.set('n', '<leader>dr', dap.continue)
+vim.keymap.set('n', '<leader>dc', dap.run_to_cursor)
+vim.keymap.set('n', '<leader>d?', function ()
+    dapui.eval(nil, { enter = true })
+end)
+
 
 
 
@@ -127,10 +164,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- end, opts)
     -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
     -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     -- vim.keymap.set('n', '<space>f', function()
     --   vim.lsp.buf.format { async = true }
     -- end, opts)
+
   end,
 })

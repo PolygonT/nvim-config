@@ -4,13 +4,13 @@ local harpoon = require("harpoon")
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set("n", "<C-a>", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-a>", function() harpoon:list():add() end)
 vim.keymap.set("n", "<C-h>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-vim.keymap.set("n", "goa", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "gos", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "god", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "gof", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "zp", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "zs", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "zt", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "zf", function() harpoon:list():select(4) end)
 
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "gon", function() harpoon:list():prev() end)
