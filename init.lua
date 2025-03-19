@@ -1,6 +1,6 @@
 require("remap")
 require("plugin")
-require("wenhaoxiong")
+require("lsp")
 
 vim.opt.nu = true
 vim.opt.wrap = false
