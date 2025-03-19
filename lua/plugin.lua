@@ -123,6 +123,9 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- transparent
+    use 'xiyaowong/transparent.nvim'
+
     -- unreal egine support
     -- use {
     --     'zadirion/Unreal.nvim',
