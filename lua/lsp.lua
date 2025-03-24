@@ -89,12 +89,25 @@ lspconfig.phan.setup{}
 -- clangd
 lspconfig.clangd.setup{
     capabilities = capabilities,
+    on_attach = function()
+        vim.keymap.set('n', '<leader>s', "<cmd>ClangdSwitchSourceHeader<CR>")
+    end,
     cmd = { "clangd-15" }
 }
 
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+  severity_sort = false,
+  float = true,
+})
+
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
@@ -125,7 +138,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- end, opts)
     -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
     -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     -- vim.keymap.set('n', '<space>f', function()
     --   vim.lsp.buf.format { async = true }
