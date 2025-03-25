@@ -48,7 +48,13 @@ return require('packer').startup(function(use)
 	use 'mbbill/undotree'
 
 	-- auto pairs
-	use 'windwp/nvim-autopairs'
+    use {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup {}
+        end
+    }
 
 	-- comments
 	use 'numToStr/Comment.nvim'
