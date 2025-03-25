@@ -21,6 +21,8 @@ return require('packer').startup(function(use)
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
 
+    use 'nvim-lua/plenary.nvim'
+
 	-- Plug '~/share-dir/wenhaoxiong/test-plugin'
 	--
 	-- lsp
@@ -99,6 +101,9 @@ return require('packer').startup(function(use)
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
+
+    -- img clip
+    use 'HakonHarnes/img-clip.nvim'
 
     -- harpoon
     use {

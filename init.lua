@@ -1,6 +1,7 @@
 require("remap")
 require("plugin")
 require("lsp")
+require("globals")
 
 vim.opt.nu = true
 vim.opt.wrap = false
@@ -42,9 +43,3 @@ autocmd('TextYankPost', {
         })
     end,
 })
-
-function P(table)
-    for _, data in ipairs(table) do
-        print(data)
-    end
-end
