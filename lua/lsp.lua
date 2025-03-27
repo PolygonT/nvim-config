@@ -11,7 +11,33 @@ cmp.setup({
     },
     window = {
         -- completion = cmp.config.window.bordered(),
+        -- completion = {
+        --     winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+        --     col_offset = -3,
+        --     side_padding = 0,
+        -- },
         -- documentation = cmp.config.window.bordered(),
+    },
+    formatting = {
+        format = require('lspkind').cmp_format({
+            mode = 'symbol_text',
+            maxwidth = {
+                -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                -- can also be a function to dynamically calculate max width such as
+                -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+                menu = 50, -- leading text (labelDetails)
+                abbr = 50, -- actual suggestion item
+            },
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function (entry, vim_item)
+                -- ...
+                return vim_item
+            end
+        })
     },
     mapping = cmp.mapping.preset.insert({
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -24,8 +50,8 @@ cmp.setup({
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'vsnip' }, -- For vsnip users.
-        -- { name = 'luasnip' }, -- For luasnip users.
+        -- { name = 'vsnip' }, -- For vsnip users.
+        { name = 'luasnip' }, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
         -- { name = 'snippy' }, -- For snippy users.
     }, {
@@ -40,6 +66,17 @@ cmp.setup.filetype('gitcommit', {
     }, {
         { name = 'buffer' },
     })
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    }),
+    matching = { disallow_symbol_nonprefix_matching = false }
 })
 
 -- Set up lspconfig.
@@ -91,6 +128,21 @@ lspconfig.clangd.setup{
     capabilities = capabilities,
     on_attach = function()
         vim.keymap.set('n', '<leader>s', "<cmd>ClangdSwitchSourceHeader<CR>")
+
+        -- if unreal project
+        local is_unreal_project = string.len(vim.fn.glob('*.uproject')) ~= 0
+        if is_unreal_project then
+            vim.keymap.set('n', '<leader>pf', function()
+                require('telescope.builtin').find_files({
+                    cwd = "Source"
+                })
+            end, {})
+            vim.keymap.set('n', '<leader>pg', function ()
+                require('telescope.builtin').live_grep({
+                    cwd = "Source"
+                })
+            end, {})
+        end
     end,
     cmd = { "clangd-15" }
 }
@@ -124,7 +176,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local opts = { buffer = ev.buf }
-    -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)

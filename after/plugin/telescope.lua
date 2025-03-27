@@ -3,8 +3,8 @@ local actions = require "telescope.actions"
 -- telescope remap
 local builtin = require('telescope.builtin')
 
-vim.keymap.set('n', '<leader>pf', builtin.git_files, {})
-vim.keymap.set('n', '<leader>psf', builtin.find_files, {})
+vim.keymap.set('n', '<leader>psf', builtin.git_files, {})
+vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
 vim.keymap.set('n', '<leader>pc', builtin.current_buffer_fuzzy_find, {})
 vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
@@ -53,6 +53,7 @@ require('telescope').setup{
     -- builtin picker
   },
   extensions = {
+      fzf = {}
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,
@@ -60,3 +61,5 @@ require('telescope').setup{
     -- please take a look at the readme of the extension you want to configure
   }
 }
+
+require('telescope').load_extension('fzf')
