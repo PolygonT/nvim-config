@@ -1,7 +1,7 @@
 require("remap")
-require("plugin")
 require("lsp")
 require("globals")
+require("config.lazy")
 
 vim.opt.nu = true
 vim.opt.wrap = false
@@ -43,3 +43,4 @@ autocmd('TextYankPost', {
         })
     end,
 })
+
