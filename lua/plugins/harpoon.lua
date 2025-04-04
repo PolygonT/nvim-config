@@ -45,12 +45,6 @@ return {
             -- Toggle previous & next buffers stored within Harpoon list
             vim.keymap.set("n", "gop", function() harpoon:list():prev() end)
             vim.keymap.set("n", "gon", function() harpoon:list():next() end)
-
-
-            vim.keymap.set("n", "zjp", function() harpoon.tmux:gotoTerminal(1) end)
-            vim.keymap.set("n", "zjs", function() harpoon.tmux:gotoTerminal(2) end)
-            vim.keymap.set("n", "zjt", function() harpoon.tmux:gotoTerminal(3) end)
-            vim.keymap.set("n", "zjf", function() harpoon.tmux:gotoTerminal(4) end)
         end
     },
 }

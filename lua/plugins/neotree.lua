@@ -16,7 +16,9 @@ return {
             -- fill any relevant options here
         },
         config = function ()
-            vim.keymap.set("n", "<leader>n", ":Neotree toggle<CR>") 
+            vim.keymap.set("n", "<leader>n", ":Neotree toggle<CR>")
+            vim.keymap.set("n", "<leader>re", ":Neotree reveal<CR>")
+
             require("neo-tree").setup({
                 close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
                 popup_border_style = "rounded",

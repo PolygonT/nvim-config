@@ -72,13 +72,6 @@ return {
         end
     },
 
-
-    -- telescope fzf native
-    {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
-    },
-
     -- markdown preview
     -- install without yarn or npm
     {
@@ -107,4 +100,8 @@ return {
     -- }
     --
     -- '/home/wenhaoxiong/workspace/neovim/ue.nvim',
+    {
+        'ue.nvim',
+        dev = true
+    }
 }

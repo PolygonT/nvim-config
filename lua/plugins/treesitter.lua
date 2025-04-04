@@ -9,14 +9,14 @@ return {
         config = function ()
             local configs = require("nvim-treesitter.configs")
             configs.setup({
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "cpp" },
+                -- ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "cpp", "java" },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
 
                 -- Automatically install missing parsers when entering buffer
                 -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-                auto_install = true,
+                auto_install = false,
 
                 -- List of parsers to ignore installing (or "all")
                 ignore_install = { "javascript" },
@@ -94,6 +94,7 @@ return {
                         set_jumps = true, -- whether to set jumps in the jumplist
                         goto_next_start = {
                             ["]m"] = "@function.outer",
+                            ["]a"] = "@parameter.inner",
                             ["]]"] = { query = "@class.outer", desc = "Next class start" },
                             --
                             -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
@@ -111,6 +112,7 @@ return {
                         },
                         goto_previous_start = {
                             ["[m"] = "@function.outer",
+                            ["[a"] = "@parameter.inner",
                             ["[["] = "@class.outer",
                             ["[l"] = "@loop.outer",
                         },

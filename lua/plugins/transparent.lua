@@ -19,14 +19,15 @@ return {
                 },
                 -- table: additional groups that should be cleared
                 extra_groups = {
-                    'NormalFloat',
                     'NvimTreeNormal',
                     'NvimTreeNormalNC',
                     'NvimTreeNormalFloat',
                     'NvimTreeEndOfBuffer',
                 },
                 -- table: groups you don't want to clear
-                exclude_groups = {},
+                exclude_groups = {
+                    'NormalFloat',
+                },
                 -- function: code to be executed after highlight groups are cleared
                 -- Also the user event "TransparentClear" will be triggered
                 on_clear = function() end,
