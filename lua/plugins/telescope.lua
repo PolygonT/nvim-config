@@ -1,10 +1,10 @@
 return {
 
     -- telescope fzf native
-    {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
-    },
+    -- {
+    --     'nvim-telescope/telescope-fzf-native.nvim',
+    --     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
+    -- },
 
     -- code action picker
     {
@@ -81,7 +81,7 @@ return {
                             }
                         }
 
-                        require('telescope').load_extension('fzf')
+                        -- require('telescope').load_extension('fzf')
                         require('telescope').load_extension('ui-select')
                     end
                 },

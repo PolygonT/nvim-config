@@ -52,7 +52,8 @@ lspconfig.clangd.setup{
         if is_unreal_project then
             vim.keymap.set('n', '<leader>pf', function()
                 require('telescope.builtin').find_files({
-                    cwd = "Source"
+                    cwd = "Source",
+                    path_display = { "tail" }
                 })
             end, {})
             vim.keymap.set('n', '<leader>pg', function ()
@@ -62,7 +63,7 @@ lspconfig.clangd.setup{
             end, {})
         end
     end,
-    cmd = { "clangd-15" }
+    cmd = { "c:/Users/wenhaoxiong/AppData/Roaming/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/19.1.2/clangd_19.1.2/bin/clangd.exe" }
 }
 
 

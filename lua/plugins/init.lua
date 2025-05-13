@@ -91,17 +91,17 @@ return {
     'mfussenegger/nvim-jdtls',
 
     -- unreal egine support
-    -- use {
-    --     'zadirion/Unreal.nvim',
-    --     requires =
-    --     {
-    --         {"tpope/vim-dispatch"}
-    --     }
-    -- }
+    {
+        'zadirion/Unreal.nvim',
+        dependencies =
+        {
+            {"tpope/vim-dispatch"}
+        }
+    }
     --
     -- '/home/wenhaoxiong/workspace/neovim/ue.nvim',
-    {
-        'ue.nvim',
-        dev = true
-    }
+    -- {
+    --     'ue.nvim',
+    --     dev = true
+    -- }
 }
