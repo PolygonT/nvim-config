@@ -9,6 +9,9 @@ return {
         config = function ()
             local configs = require("nvim-treesitter.configs")
             configs.setup({
+                indent = {
+                    enable = true
+                },
                 -- ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "cpp", "java" },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)

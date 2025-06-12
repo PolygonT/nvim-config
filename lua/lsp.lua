@@ -55,14 +55,28 @@ lspconfig.clangd.setup{
                     cwd = "Source"
                 })
             end, {})
+
+            vim.keymap.set('n', '<leader>pss', function()
+                require('telescope.builtin').find_files({
+                    cwd = "/home/wenhaoxiong/software/unreal/UnrealEngine-5.4.4-release/Engine/Source/Runtime"
+                })
+            end, {})
+
             vim.keymap.set('n', '<leader>pg', function ()
                 require('telescope.builtin').live_grep({
                     cwd = "Source"
                 })
             end, {})
+
+            vim.keymap.set('n', '<leader>psg', function ()
+                require('telescope.builtin').live_grep({
+                    cwd = "/home/wenhaoxiong/software/unreal/UnrealEngine-5.4.4-release/Engine/Source/Runtime"
+                })
+            end, {})
         end
     end,
-    cmd = { "clangd-15" }
+    cmd = { "/home/wenhaoxiong/develop/language_server/clangd_19.1.2/bin/clangd" }
+    -- cmd = { "/home/wenhaoxiong/develop/language_server/ccls/Release/ccls" }
 }
 
 
