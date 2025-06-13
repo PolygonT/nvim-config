@@ -23,6 +23,7 @@ vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = "C:/Users/wenhaoxiong/Documents" .. "/.vim/undodir"
 vim.g.undotree_DiffCommand = "FC"
+vim.opt.smartindent = false
 
 vim.opt.signcolumn = "yes"
 

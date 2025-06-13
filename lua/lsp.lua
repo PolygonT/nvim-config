@@ -56,6 +56,12 @@ lspconfig.clangd.setup{
                     path_display = { "tail" }
                 })
             end, {})
+            vim.keymap.set('n', '<leader>pss', function()
+                require('telescope.builtin').find_files({
+                    cwd = "C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime",
+                    -- path_display = { "tail" }
+                })
+            end, {})
             vim.keymap.set('n', '<leader>pg', function ()
                 require('telescope.builtin').live_grep({
                     cwd = "Source"
@@ -101,6 +107,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format, opts)
     -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
     -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
