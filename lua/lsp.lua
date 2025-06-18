@@ -42,35 +42,44 @@ lspconfig.lua_ls.setup{}
 lspconfig.phan.setup{}
 
 -- clangd
-lspconfig.clangd.setup{
+local clangd_on_attach = vim.lsp.config.clangd.on_attach
+vim.lsp.config("clangd", {
     capabilities = capabilities,
-    on_attach = function()
-        vim.keymap.set('n', '<leader>s', "<cmd>ClangdSwitchSourceHeader<CR>")
+    on_attach = function(client, bufnr)
+        clangd_on_attach(client, bufnr)
+        vim.keymap.set('n', '<leader>s', "<cmd>LspClangdSwitchSourceHeader<CR>")
 
         -- if unreal project
         local is_unreal_project = string.len(vim.fn.glob('*.uproject')) ~= 0
         if is_unreal_project then
             vim.keymap.set('n', '<leader>pf', function()
-                require('telescope.builtin').find_files({
+                require('fzf-lua').files({
                     cwd = "Source",
-                    path_display = { "tail" }
+                    -- path_display = { "tail" }
                 })
             end, {})
             vim.keymap.set('n', '<leader>pss', function()
-                require('telescope.builtin').find_files({
-                    cwd = "C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime",
+                require('fzf-lua').files({
+                    cwd = "F:/EpicGames/UE_5.6",
                     -- path_display = { "tail" }
                 })
             end, {})
             vim.keymap.set('n', '<leader>pg', function ()
-                require('telescope.builtin').live_grep({
+                require('fzf-lua').live_grep({
                     cwd = "Source"
                 })
             end, {})
         end
     end,
-    cmd = { "c:/Users/wenhaoxiong/AppData/Roaming/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/19.1.2/clangd_19.1.2/bin/clangd.exe" }
-}
+    cmd = { "G:/software/clangd_19.1.2/bin/clangd" }
+})
+
+vim.lsp.enable('clangd')
+
+-- lspconfig.clangd.setup{
+--     capabilities = capabilities,
+--     -- cmd = { "D:/software/clangd_19.1.2/bin/clangd" }
+-- }
 
 
 -- Global mappings.
@@ -95,32 +104,40 @@ vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist)
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format, opts)
-    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    -- vim.keymap.set('n', '<space>wl', function()
-    --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, opts)
-    -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    -- vim.keymap.set('n', '<space>f', function()
-    --   vim.lsp.buf.format { async = true }
-    -- end, opts)
+        -- Buffer local mappings.
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        local opts = { buffer = ev.buf }
+
+        local fzf = require('fzf-lua')
+        vim.keymap.set('n', 'gD', fzf.lsp_declarations, opts)
+        vim.keymap.set('n', 'gd', fzf.lsp_definitions, opts)
+        vim.keymap.set('n', 'gr', fzf.lsp_references, opts)
+        vim.keymap.set('n', 'gi', fzf.lsp_implementations, opts)
+        vim.keymap.set('n', 'gt', fzf.lsp_typedefs, opts)
+
+        -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        -- vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set({ 'n', 'v' }, 'gf', vim.lsp.buf.format, opts)
+        -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+        -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+        -- vim.keymap.set('n', '<space>wl', function()
+        --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        -- end, opts)
+        -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        -- vim.keymap.set('n', '<space>f', function()
+        --   vim.lsp.buf.format { async = true }
+        -- end, opts)
 
   end,
 })

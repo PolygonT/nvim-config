@@ -1,10 +1,10 @@
 return {
 
     -- telescope fzf native
-    -- {
-    --     'nvim-telescope/telescope-fzf-native.nvim',
-    --     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
-    -- },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'mingw32-make'
+    },
 
     -- code action picker
     {
@@ -13,7 +13,7 @@ return {
 
     -- telescope
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        'nvim-telescope/telescope.nvim', tag = '0.1.5',
         -- or                            , branch = '0.1.x',
         dependencies = { {'nvim-lua/plenary.nvim'} },
         config = function ()
@@ -23,9 +23,9 @@ return {
             local builtin = require('telescope.builtin')
 
             vim.keymap.set('n', '<leader>psf', builtin.git_files, {})
-            vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+            -- vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
             vim.keymap.set('n', '<leader>pc', builtin.current_buffer_fuzzy_find, {})
-            vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
+            -- vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
             vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
             vim.keymap.set('n', '<leader>ph', builtin.help_tags, {})
             vim.keymap.set('n', '<leader>pic', builtin.git_commits, {})
@@ -81,7 +81,7 @@ return {
                             }
                         }
 
-                        -- require('telescope').load_extension('fzf')
+                        require('telescope').load_extension('fzf')
                         require('telescope').load_extension('ui-select')
                     end
                 },

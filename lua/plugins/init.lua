@@ -107,7 +107,7 @@ return {
             require('ue').setup({
                 versions = {
                     {
-                        version = "5.5",
+                        version = "5.4",
                         path = "C:/Program Files/Epic Games/UE_5.4/"
                     },
                     {
