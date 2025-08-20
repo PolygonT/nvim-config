@@ -71,7 +71,7 @@ vim.lsp.config("clangd", {
             end, {})
         end
     end,
-    cmd = { "G:/software/clangd_19.1.2/bin/clangd" }
+    cmd = { "D:/software/clangd_19.1.2/bin/clangd" }
 })
 
 vim.lsp.enable('clangd')
