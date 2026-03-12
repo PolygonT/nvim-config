@@ -18,14 +18,15 @@ return {
         dependencies = { {'nvim-lua/plenary.nvim'} },
         config = function ()
             local actions = require "telescope.actions"
+            local action_state = require "telescope.actions.state"
 
             -- telescope remap
             local builtin = require('telescope.builtin')
 
             vim.keymap.set('n', '<leader>psf', builtin.git_files, {})
-            vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+            -- vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
             vim.keymap.set('n', '<leader>pc', builtin.current_buffer_fuzzy_find, {})
-            vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
+            -- vim.keymap.set('n', '<leader>pg', builtin.live_grep, {})
             vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
             vim.keymap.set('n', '<leader>ph', builtin.help_tags, {})
             vim.keymap.set('n', '<leader>pic', builtin.git_commits, {})
@@ -33,6 +34,18 @@ return {
             vim.keymap.set('n', '<leader>pid', builtin.git_status, {})
             vim.keymap.set('n', '<leader>pib', builtin.git_branches, {})
             vim.keymap.set('n', '<leader>pis', builtin.git_stash, {})
+
+            local diff_view = function(prompt_bufnr)
+                actions.close(prompt_bufnr)
+
+                local selection = action_state.get_selected_entry()
+                if selection == nil then
+                    return
+                end
+
+                vim.cmd("DiffviewOpen " .. selection.value)
+            end
+
 
             require('telescope').setup{
                 defaults = {
@@ -60,9 +73,16 @@ return {
                                 ["<c-m>"] = actions.git_delete_branch,
                                 ["<c-d>"] = actions.preview_scrolling_down,
                                 ["<cr>"] = actions.git_switch_branch,
-                            }
-                            ,    }
+                            },
                         }
+                    },
+                    git_commits = {
+                        mappings = {
+                            i = {
+                                ["<c-e>"] = diff_view
+                            }
+                        }
+                    }
                         -- Default configuration for builtin pickers goes here:
                         -- picker_name = {
                             --   picker_config_key = value,

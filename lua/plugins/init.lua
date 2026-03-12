@@ -19,7 +19,20 @@ return {
 	-- Plug 'williamboman/mason-lspconfig.nvim'
 
 	-- LSP Support
-	'neovim/nvim-lspconfig',
+	{
+        'neovim/nvim-lspconfig',
+        -- wired glsl error
+        config = function()
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if client and client.name == "glsl_analyzer" then
+                        client.cancel_request = function() end
+                    end
+                end,
+            })
+        end,
+    },
 	-- Autocompletion
 	-- use 'hrsh7th/nvim-cmp'
 	-- use 'hrsh7th/cmp-nvim-lsp'
@@ -100,8 +113,8 @@ return {
     -- }
     --
     -- '/home/wenhaoxiong/workspace/neovim/ue.nvim',
-    {
-        'ue.nvim',
-        dev = true
-    }
+    -- {
+    --     'ue.nvim',
+    --     dev = true
+    -- }
 }

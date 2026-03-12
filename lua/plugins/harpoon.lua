@@ -3,7 +3,7 @@ return {
     {
         "PolygonT/harpoon",
         branch = "feat_assign",
-        denpendencies = {
+        denpendencies = { 
             {"nvim-lua/plenary.nvim"},
             {'nvim-telescope/telescope.nvim'}
         },
@@ -33,15 +33,13 @@ return {
             end
 
 
-            local harpoon_list = require("harpoon.list")
-
             vim.keymap.set("n", "<C-a>", function() harpoon:list():assign_to_idx(1) end)
             vim.keymap.set("n", "zip", function() harpoon:list():assign_to_idx(1) end)
             vim.keymap.set("n", "zis", function() harpoon:list():assign_to_idx(2) end)
             vim.keymap.set("n", "zit", function() harpoon:list():assign_to_idx(3) end)
             vim.keymap.set("n", "zif", function() harpoon:list():assign_to_idx(4) end)
-            -- vim.keymap.set("n", "<C-a>", function() harpoon:list():prepend() end)
 
+            -- vim.keymap.set("n", "<C-a>", function() harpoon:list():add() end)
             vim.keymap.set("n", "<C-h>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
             vim.keymap.set("n", "<leader>pz", function() toggle_telescope(harpoon:list()) end,
             { desc = "Open harpoon window" })

@@ -1,7 +1,7 @@
+require("config.lazy")
 require("remap")
 require("lsp")
 require("globals")
-require("config.lazy")
 
 vim.opt.nu = true
 vim.opt.wrap = false
@@ -21,7 +21,14 @@ vim.opt.hlsearch = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+
+if vim.fn.has('unix') then
+    vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+else
+    vim.opt.undodir = "C:/Users/wenhaoxiong/Documents" .. "/.vim/undodir"
+    vim.g.undotree_DiffCommand = "FC"
+    vim.opt.smartindent = false
+end
 -- vim.opt.smartindent = false
 
 vim.opt.signcolumn = "yes"
