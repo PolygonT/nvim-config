@@ -43,7 +43,7 @@ return {
                     return
                 end
 
-                vim.cmd("DiffviewOpen " .. selection.value)
+                vim.cmd("DiffviewOpen " .. selection.value .. "^!")
             end
 
 
