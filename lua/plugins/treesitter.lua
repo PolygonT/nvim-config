@@ -138,6 +138,43 @@ return {
 
             local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
 
+            -- =============make ]c ]x repeat move================
+            local function next_diff()
+                vim.cmd.normal({ "]c", bang = true })
+            end
+
+            local function prev_diff()
+                vim.cmd.normal({ "[c", bang = true })
+            end
+
+            local function next_conflict_marker()
+                vim.cmd.normal({ "]x", bang = true })
+            end
+
+            local function prev_conflict_marker()
+                vim.cmd.normal({ "[x", bang = true })
+            end
+
+
+            local next_diff_repeat, prev_diff_repeat =
+            ts_repeat_move.make_repeatable_move_pair(
+                next_diff,
+                prev_diff
+            )
+
+            local next_conflict_marker_repeat, prev_conflict_marker_repeat =
+            ts_repeat_move.make_repeatable_move_pair(
+                next_conflict_marker,
+                prev_conflict_marker
+            )
+
+            vim.keymap.set("n", "]c", next_diff_repeat)
+            vim.keymap.set("n", "[c", prev_diff_repeat)
+            vim.keymap.set("n", "]x", next_conflict_marker_repeat)
+            vim.keymap.set("n", "[x", prev_conflict_marker_repeat)
+
+            -- ===================================================
+
             -- Repeat movement with ; and ,
             -- ensure ; goes forward and , goes backward regardless of the last direction
             vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
