@@ -139,6 +139,7 @@ return {
             local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
 
             -- =============make ]c ]x repeat move================
+            local diffview_actions = require("diffview.actions")
             local function next_diff()
                 vim.cmd.normal({ "]c", bang = true })
             end
@@ -146,15 +147,6 @@ return {
             local function prev_diff()
                 vim.cmd.normal({ "[c", bang = true })
             end
-
-            local function next_conflict_marker()
-                vim.cmd.normal({ "]x", bang = true })
-            end
-
-            local function prev_conflict_marker()
-                vim.cmd.normal({ "[x", bang = true })
-            end
-
 
             local next_diff_repeat, prev_diff_repeat =
             ts_repeat_move.make_repeatable_move_pair(
@@ -164,8 +156,8 @@ return {
 
             local next_conflict_marker_repeat, prev_conflict_marker_repeat =
             ts_repeat_move.make_repeatable_move_pair(
-                next_conflict_marker,
-                prev_conflict_marker
+                diffview_actions.next_conflict,
+                diffview_actions.prev_conflict
             )
 
             vim.keymap.set("n", "]c", next_diff_repeat)
