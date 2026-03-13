@@ -13,22 +13,7 @@ return {
                 opts.border = "rounded"
                 return orig_util(contents, syntax, opts, ...)
             end
-            vim.diagnostic.config({
-                float = {
-                    border = "rounded",
-                    source = "always",
-                },
-            })
-            vim.api.nvim_create_autocmd("CursorHold", {
-                callback = function()
-                    vim.diagnostic.open_float(nil, {
-                        focus = false,
-                        border = "rounded",
-                    })
-                end,
-            })
 
-            -- Optional, you don't have to run setup.
             require("transparent").setup({
                 -- table: default groups
                 groups = {
@@ -54,6 +39,8 @@ return {
                 -- Also the user event "TransparentClear" will be triggered
                 on_clear = function() end,
             })
+
+            -- Optional, you don't have to run setup.
         end
     }
 }
