@@ -80,7 +80,9 @@ return {
     {
         'sainnhe/everforest',
         config = function()
-            vim.cmd [[ set background=dark ]]
+            vim.g.everforest_background = "hard"
+            vim.g.everforest_transparent_background = 1
+            -- vim.cmd [[ set background=dark ]]
             vim.cmd [[ colorscheme everforest" ]]
         end
     },
@@ -127,7 +129,7 @@ return {
             explorer = { enabled = false },
             indent = { enabled = true },
             input = { enabled = false },
-            picker = { enabled = false },
+            picker = { enabled = true },
             notifier = { enabled = true },
             quickfile = { enabled = false },
             scope = { enabled = false },

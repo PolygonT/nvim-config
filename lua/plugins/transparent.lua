@@ -6,6 +6,27 @@ return {
             transparent.clear_prefix('NeoTree')
             transparent.clear_prefix('lualine')
             transparent.clear_prefix('BufferLine')
+            local orig_util = vim.lsp.util.open_floating_preview
+
+            vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+                opts = opts or {}
+                opts.border = "rounded"
+                return orig_util(contents, syntax, opts, ...)
+            end
+            vim.diagnostic.config({
+                float = {
+                    border = "rounded",
+                    source = "always",
+                },
+            })
+            vim.api.nvim_create_autocmd("CursorHold", {
+                callback = function()
+                    vim.diagnostic.open_float(nil, {
+                        focus = false,
+                        border = "rounded",
+                    })
+                end,
+            })
 
             -- Optional, you don't have to run setup.
             require("transparent").setup({
@@ -19,6 +40,8 @@ return {
                 },
                 -- table: additional groups that should be cleared
                 extra_groups = {
+                    'NormalFloat',
+                    "FloatBorder",
                     'NvimTreeNormal',
                     'NvimTreeNormalNC',
                     'NvimTreeNormalFloat',
@@ -26,7 +49,6 @@ return {
                 },
                 -- table: groups you don't want to clear
                 exclude_groups = {
-                    'NormalFloat',
                 },
                 -- function: code to be executed after highlight groups are cleared
                 -- Also the user event "TransparentClear" will be triggered
