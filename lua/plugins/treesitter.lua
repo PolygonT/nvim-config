@@ -199,4 +199,11 @@ return {
             vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
         end
     },
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        event = "VeryLazy",
+        opts = {
+            max_lines = 0,
+        },
+    }
 }
