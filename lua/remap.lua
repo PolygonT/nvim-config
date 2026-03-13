@@ -7,8 +7,8 @@ vim.keymap.set("v", "H", "^")
 vim.keymap.set("n", "L", "$") 
 vim.keymap.set("v", "L", "$") 
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz") 
-vim.keymap.set("n", "<C-u>", "<C-u>zz") 
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz") 
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz") 
 
 vim.keymap.set("v", "<leader>y", [["+y]]) 
 vim.keymap.set("n", "<leader>y", [["+y]]) 

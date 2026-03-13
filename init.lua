@@ -22,6 +22,19 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
 
+-- folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.o.foldmethod = "indent"
+vim.o.foldlevel = 99
+vim.keymap.set("n", "zm", function()
+  if vim.o.foldlevel == 0 then
+    vim.o.foldlevel = 99
+  else
+    vim.o.foldlevel = 0
+  end
+end)
+
 if vim.fn.has('unix') then
     vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 else

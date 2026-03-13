@@ -148,6 +148,14 @@ return {
                 vim.cmd.normal({ "[c", bang = true })
             end
 
+            local function next_fold()
+                vim.cmd.normal({ "zj", bang = true })
+            end
+
+            local function prev_fold()
+                vim.cmd.normal({ "zk", bang = true })
+            end
+
             local next_diff_repeat, prev_diff_repeat =
             ts_repeat_move.make_repeatable_move_pair(
                 next_diff,
@@ -160,10 +168,18 @@ return {
                 diffview_actions.prev_conflict
             )
 
+            local next_fold_repeat, prev_fold_repeat =
+            ts_repeat_move.make_repeatable_move_pair(
+                next_fold,
+                prev_fold
+            )
+
             vim.keymap.set("n", "]c", next_diff_repeat)
             vim.keymap.set("n", "[c", prev_diff_repeat)
             vim.keymap.set("n", "]x", next_conflict_marker_repeat)
             vim.keymap.set("n", "[x", prev_conflict_marker_repeat)
+            vim.keymap.set("n", "zj", next_fold_repeat)
+            vim.keymap.set("n", "zk", prev_fold_repeat)
 
             -- ===================================================
 

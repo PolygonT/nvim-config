@@ -66,8 +66,8 @@ return {
                         ["<S-up>"]      = "preview-page-up",
                         -- ["<C-d>"]  = "preview-down",
                         -- ["<C-u>"]    = "preview-up",
-                        ["<M-S-down>"]  = "preview-down",
-                        ["<M-S-up>"]    = "preview-up",
+                        ["<M-down>"]  = "preview-down",
+                        ["<M-up>"]    = "preview-up",
                     },
                     fzf = {
                         -- fzf '--bind=' options
