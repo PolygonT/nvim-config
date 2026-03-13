@@ -64,16 +64,16 @@ return {
                         ["<S-Left>"]    = "preview-reset",
                         ["<S-down>"]    = "preview-page-down",
                         ["<S-up>"]      = "preview-page-up",
-                        -- ["<C-d>"]  = "preview-down",
-                        -- ["<C-u>"]    = "preview-up",
-                        ["<M-down>"]  = "preview-down",
-                        ["<M-up>"]    = "preview-up",
+                        ["<C-d>"]  = "preview-down",
+                        ["<C-u>"]    = "preview-up",
+                        -- ["<M-down>"]  = "preview-down",
+                        -- ["<M-up>"]    = "preview-up",
                     },
                     fzf = {
                         -- fzf '--bind=' options
                         -- true,        -- uncomment to inherit all the below in your custom config
                         ["ctrl-z"]      = "abort",
-                        ["ctrl-u"]      = "unix-line-discard",
+                        -- ["ctrl-u"]      = "unix-line-discard",
                         ["ctrl-f"]      = "half-page-down",
                         ["ctrl-b"]      = "half-page-up",
                         ["ctrl-a"]      = "beginning-of-line",
@@ -86,6 +86,8 @@ return {
                         ["f4"]          = "toggle-preview",
                         ["shift-down"]  = "preview-page-down",
                         ["shift-up"]    = "preview-page-up",
+                        ["ctrl-d"]  = "preview-down",
+                        ["ctrl-u"]    = "preview-up",
                     },
                 },
                 -- SPECIFIC COMMAND/PICKER OPTIONS, SEE BELOW
