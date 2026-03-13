@@ -8,9 +8,34 @@ return {
         opts = {},
         config = function()
             local fzf = require('fzf-lua')
-            vim.keymap.set('n', '<leader>pf', fzf.files, {})
-            vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
+            -- local actions = require('fzf-lua.actions')
 
+            vim.keymap.set('n', '<leader>pf', fzf.files, {})
+            -- vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
+            vim.keymap.set('n', '<leader>psf', fzf.git_files, {})
+            -- vim.keymap.set('n', '<leader>pc', fzf.current_buffer_fuzzy_find, {})
+            vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
+            vim.keymap.set('n', '<leader>pb', fzf.buffers, {})
+            vim.keymap.set('n', '<leader>ph', fzf.helptags, {})
+            vim.keymap.set('n', '<leader>pic', fzf.git_commits, {})
+            vim.keymap.set('n', '<leader>pih', fzf.git_bcommits, {})
+            vim.keymap.set('n', '<leader>pid', fzf.git_status, {})
+            vim.keymap.set('n', '<leader>pib', fzf.git_branches, {})
+            vim.keymap.set('n', '<leader>pis', fzf.git_stash, {})
+
+            local diff_view = function(selected, opts)
+                if not selected[1] then return end
+
+                local commit_hash
+                if type(opts.fn_match_commit_hash) == "function" then
+                    commit_hash = opts.fn_match_commit_hash(selected[1], opts)
+                else
+                    commit_hash = selected[1]:match("[^ ]+")
+                end
+
+                vim.cmd("DiffviewOpen " .. commit_hash .. "^!")
+
+            end
 
             fzf.setup{
                 -- MISC GLOBAL SETUP OPTIONS, SEE BELOW
@@ -39,8 +64,10 @@ return {
                         ["<S-Left>"]    = "preview-reset",
                         ["<S-down>"]    = "preview-page-down",
                         ["<S-up>"]      = "preview-page-up",
-                        ["<C-d>"]  = "preview-down",
-                        ["<C-u>"]    = "preview-up",
+                        -- ["<C-d>"]  = "preview-down",
+                        -- ["<C-u>"]    = "preview-up",
+                        ["<M-S-down>"]  = "preview-down",
+                        ["<M-S-up>"]    = "preview-up",
                     },
                     fzf = {
                         -- fzf '--bind=' options
@@ -63,6 +90,18 @@ return {
                 },
                 -- SPECIFIC COMMAND/PICKER OPTIONS, SEE BELOW
                 -- files = { ... },
+                git = {
+                    commits = {
+                        actions = {
+                            ["ctrl-e"] = {
+                                fn = diff_view,
+                                desc = "diff-view"
+                            },
+                        }
+
+                    }
+
+                }
             }
         end
     }
