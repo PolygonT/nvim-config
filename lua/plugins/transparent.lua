@@ -14,6 +14,12 @@ return {
                 return orig_util(contents, syntax, opts, ...)
             end
 
+            -- vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+            --     config = config or {}
+            --     config.border = border
+            --     vim.lsp.handlers.signature_help(err, result, ctx, config)
+            -- end
+
             require("transparent").setup({
                 -- table: default groups
                 groups = {

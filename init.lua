@@ -35,6 +35,15 @@ vim.keymap.set("n", "zm", function()
   end
 end)
 -- ===============================
+--
+-- auto read
+vim.o.autoread = true
+vim.o.updatetime = 200
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  command = "checktime",
+})
+
 
 if vim.fn.has('unix') then
     vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
