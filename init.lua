@@ -34,6 +34,13 @@ vim.keymap.set("n", "zm", function()
     vim.o.foldlevel = 0
   end
 end)
+--
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "cpp", "c", "h", "hpp" },
+    callback = function()
+        vim.opt_local.foldmethod = "indent"
+    end
+})
 -- ===============================
 --
 -- auto read
