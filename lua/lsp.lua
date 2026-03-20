@@ -6,6 +6,20 @@ if vim.fn.has('unix') then
     local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
     snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+    -- lsp跳转库文件后，关闭文件修改
+    vim.api.nvim_create_autocmd("BufReadPost", {
+        callback = function(args)
+            local path = args.file
+
+            if path:match("/%.cargo/registry/")
+                or path:match("/%.rustup/toolchains/") then
+
+                vim.bo[args.buf].modifiable = false
+                vim.bo[args.buf].readonly = true
+            end
+        end,
+    })
+
     -- Setup language servers.
     -- local lspconfig = require('lspconfig')
 
