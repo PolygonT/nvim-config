@@ -42,6 +42,8 @@ if vim.fn.has('unix') then
                     }
                 }
 
+                dap.configurations.rust = dap.configurations.cpp
+
                 -- dap keymaps
 
                 vim.keymap.set('n', '<leader>do', dapui.toggle)

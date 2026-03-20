@@ -24,7 +24,8 @@ vim.opt.undofile = true
 
 -- ==========folding==============
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.o.foldmethod = "indent"
 vim.o.foldlevel = 99
 vim.keymap.set("n", "zm", function()
@@ -35,12 +36,12 @@ vim.keymap.set("n", "zm", function()
   end
 end)
 --
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "cpp", "c", "h", "hpp" },
-    callback = function()
-        vim.opt_local.foldmethod = "indent"
-    end
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = { "cpp", "c", "h", "hpp" },
+--     callback = function()
+--         vim.opt_local.foldmethod = "indent"
+--     end
+-- })
 -- ===============================
 --
 -- auto read

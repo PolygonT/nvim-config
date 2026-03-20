@@ -16,6 +16,21 @@ if vim.fn.has('unix') then
     --
 
     -- rust_analyzer
+    vim.lsp.config('rust_analyzer', {
+        capabilities = capabilities,
+        settings = {
+            ['rust-analyzer'] = {
+                diagnostics = {
+                    enable = false;
+                }
+            }
+        },
+        on_attach = function(client, bufnr)
+            vim.keymap.set('n', '<leader>cmr', "<cmd>!cargo run<CR>")
+            vim.keymap.set('n', '<leader>cmt', "<cmd>!cargo test<CR>")
+        end
+    })
+    vim.lsp.enable('rust_analyzer')
     -- lspconfig.rust_analyzer.setup {
     --     capabilities = capabilities, 
     --     on_attach = function()
