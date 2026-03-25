@@ -29,11 +29,11 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.o.foldmethod = "indent"
 vim.o.foldlevel = 99
 vim.keymap.set("n", "zm", function()
-  if vim.o.foldlevel == 0 then
-    vim.o.foldlevel = 99
-  else
-    vim.o.foldlevel = 0
-  end
+    if vim.o.foldlevel == 0 then
+        vim.o.foldlevel = 99
+    else
+        vim.o.foldlevel = 0
+    end
 end)
 --
 -- vim.api.nvim_create_autocmd("FileType", {
