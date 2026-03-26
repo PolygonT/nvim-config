@@ -38,8 +38,8 @@ return {
                 ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
                 ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
 
-                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
-                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-u>'] = { 'scroll_documentation_up' },
+                ['<C-d>'] = { 'scroll_documentation_down' },
 
                 -- ['<Tab>'] = { 'snippet_forward', 'fallback' },
                 -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
