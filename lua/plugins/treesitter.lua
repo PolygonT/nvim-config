@@ -174,10 +174,23 @@ return {
                 prev_fold
             )
 
+
             vim.keymap.set("n", "]c", next_diff_repeat)
             vim.keymap.set("n", "[c", prev_diff_repeat)
-            vim.keymap.set("n", "]x", next_conflict_marker_repeat)
-            vim.keymap.set("n", "[x", prev_conflict_marker_repeat)
+            -- vim.keymap.set("n", "]x", next_conflict_marker_repeat)
+            -- vim.keymap.set("n", "[x", prev_conflict_marker_repeat)
+            require("diffview").setup({
+                keymaps = {
+                    view = {
+                        ["]x"] = function()
+                            next_conflict_marker_repeat()
+                        end,
+                        ["[x"] = function()
+                            prev_conflict_marker_repeat()
+                        end,
+                    },
+                },
+            })
             vim.keymap.set("n", "zj", next_fold_repeat)
             vim.keymap.set("n", "zk", prev_fold_repeat)
 

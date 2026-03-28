@@ -101,6 +101,15 @@ return {
                             },
                         }
 
+                    },
+                    bcommits = {
+                        actions = {
+                            ["ctrl-e"] = {
+                                fn = diff_view,
+                                desc = "diff-view"
+                            },
+                        }
+
                     }
 
                 }
