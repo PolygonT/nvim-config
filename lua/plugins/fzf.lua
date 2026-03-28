@@ -95,16 +95,19 @@ return {
                 -- files = { ... },
                 git = {
                     commits = {
-                        -- cmd = [[git log --graph --color --pretty=format:"%C(yellow)%h%Creset ]]
-                        --     .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
+                        cmd = [[git log --graph --color --pretty=format:"%C(yellow)%h%Creset ]]
+                            .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
                         actions = {
                             ["ctrl-e"] = {
                                 fn = diff_view,
                                 desc = "diff-view"
                             },
                             ["ctrl-d"] = false,
-                        }
-
+                        },
+                        fn_match_commit_hash = function(line, _)
+                            return line:match("[a-z0-9]+")
+                        end,
+                        preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
                     },
                     bcommits = {
                         actions = {

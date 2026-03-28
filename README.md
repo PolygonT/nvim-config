@@ -7,4 +7,4 @@
 - [x] config diagonost list lint to telescope
 - [x] telescope git log <leader>pib show specific date
 - [ ] reload project
-- [ ] add --graph to fzflua git_commits (error on preview)
+- [x] add --graph to fzflua git_commits (error on preview)

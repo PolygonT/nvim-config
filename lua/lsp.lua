@@ -190,8 +190,24 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
     })
 
     vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float)
-    vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
-    vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
+    -- vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
+    -- vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
+
+    -- new api, float = true not working
+    vim.keymap.set('n', '<leader>dn', function()
+        vim.diagnostic.jump({
+            count = 1,
+            float = true,
+            wrap = true,
+        })
+    end)
+    vim.keymap.set('n', '<leader>dp', function()
+        vim.diagnostic.jump({
+            count = -1,
+            float = true,
+            wrap = true,
+        })
+    end)
     vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist)
 
     -- Use LspAttach autocommand to only map the following keys
