@@ -107,7 +107,13 @@ return {
                         fn_match_commit_hash = function(line, _)
                             return line:match("[a-z0-9]+")
                         end,
-                        preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
+                        -- preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
+                        preview = [[ hash=$(echo {} | grep -oE "[a-f0-9]{7,}" | head -1); ]]
+                            .. [[ if [ -z "$hash" ]; then ]]
+                            .. [[ echo "Not a commit line"; ]]
+                            .. [[ else ]]
+                            .. [[ git show --color "$hash"; ]]
+                            .. [[ fi ]]
                     },
                     bcommits = {
                         actions = {
