@@ -114,7 +114,7 @@ return {
 
                     },
                     branches = {
-                        preview = "git log --graph --pretty=format:'%C(yellow)%h %C(green)%ad %C(reset)%s %C(blue)%an%C(reset)' --date=format:'(%Y-%m-%d %H:%M)' --abbrev-commit --color {1}"
+                        preview = [[git log --graph --pretty=format:"%C(yellow)%h %C(green)%ad %C(reset)%s %C(blue)%an%C(reset)" --date=format:"(%Y-%m-%d %H:%M)" --abbrev-commit --color {1}]]
                     },
 
                 }
