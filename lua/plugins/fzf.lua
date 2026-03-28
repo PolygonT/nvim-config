@@ -95,6 +95,8 @@ return {
                 -- files = { ... },
                 git = {
                     commits = {
+                        -- cmd = [[git log --graph --color --pretty=format:"%C(yellow)%h%Creset ]]
+                        --     .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
                         actions = {
                             ["ctrl-e"] = {
                                 fn = diff_view,
