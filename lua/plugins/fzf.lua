@@ -64,6 +64,7 @@ return {
                         ["<S-Left>"]    = "preview-reset",
                         ["<S-down>"]    = "preview-page-down",
                         ["<S-up>"]      = "preview-page-up",
+                        -- <C-d> <ctrl-d>每个地方不同，混用会导致问题
                         ["<C-d>"]  = "preview-down",
                         ["<C-u>"]    = "preview-up",
                         -- ["<M-down>"]  = "preview-down",
@@ -99,6 +100,7 @@ return {
                                 fn = diff_view,
                                 desc = "diff-view"
                             },
+                            ["ctrl-d"] = false,
                         }
 
                     },
