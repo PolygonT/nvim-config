@@ -1,5 +1,5 @@
 local M = {}
-if vim.fn.has('unix') then
+if vim.loop.os_uname().sysname ~= "Windows_NT" then
 
 else
     M = {

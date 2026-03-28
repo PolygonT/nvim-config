@@ -1,4 +1,4 @@
-if vim.fn.has('unix') then
+if vim.loop.os_uname().sysname ~= "Windows_NT" then
     require("config.lazy")
     require("remap")
     require("lsp")
@@ -59,8 +59,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   command = "checktime",
 })
 
-
-if vim.fn.has('unix') then
+if vim.loop.os_uname().sysname ~= "Windows_NT" then
     vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 else
     vim.opt.undodir = "C:/Users/wenhaoxiong/Documents" .. "/.vim/undodir"

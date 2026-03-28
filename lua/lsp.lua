@@ -1,4 +1,4 @@
-if vim.fn.has('unix') then
+if vim.loop.os_uname().sysname ~= "Windows_NT" then
     -- linux config
     -- Set up lspconfig.
     -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
