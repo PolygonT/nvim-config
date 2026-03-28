@@ -3,7 +3,14 @@ return {
     -- telescope fzf native
     {
         'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
+        build = function ()
+            
+            if vim.fn.has('unix') then
+                return 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
+            else
+                return 'mingw32-make'
+            end
+        end
     },
 
     -- code action picker
@@ -95,7 +102,7 @@ return {
                             -- builtin picker
                         },
                         extensions = {
-                            fzf = {}
+                            -- fzf = {}
                             -- Your extension configuration goes here:
                             -- extension_name = {
                                 --   extension_config_key = value,

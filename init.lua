@@ -1,7 +1,14 @@
-require("config.lazy")
-require("remap")
-require("lsp")
-require("globals")
+if vim.fn.has('unix') then
+    require("config.lazy")
+    require("remap")
+    require("lsp")
+    require("globals")
+else
+    require("remap")
+    require("globals")
+    require("config.lazy")
+    require("lsp")
+end
 
 vim.opt.nu = true
 vim.opt.wrap = false
