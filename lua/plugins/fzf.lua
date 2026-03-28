@@ -37,6 +37,19 @@ return {
 
             end
 
+            local preview_cmd
+
+            if vim.loop.os_uname().sysname ~= "Windows_NT" then
+                preview_cmd = [[ hash=$(echo {} | grep -oE "[a-f0-9]{7,}" | head -1); ]]
+                .. [[ if [ -z "$hash" ]; then ]]
+                .. [[ echo "Not a commit line"; ]]
+                .. [[ else ]]
+                .. [[ git show --color "$hash"; ]]
+                .. [[ fi ]]
+            else
+                preview_cmd = [[ powershell -Command "$line = '{}'; if ($line -match '[a-f0-9]{7,}') { git show --color $matches[0] } else { echo 'Not a commit line' }" ]]
+            end
+
             fzf.setup{
                 -- MISC GLOBAL SETUP OPTIONS, SEE BELOW
                 -- fzf_bin = ...,
@@ -108,13 +121,7 @@ return {
                             return line:match("[a-z0-9]+")
                         end,
                         -- preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
-                        preview = [[ hash=$(echo {} | grep -oE "[a-f0-9]{7,}" | head -1); ]]
-                            .. [[ if [ -z "$hash" ]; then ]]
-                            .. [[ echo "Not a commit line"; ]]
-                            .. [[ else ]]
-                            .. [[ git show --color "$hash"; ]]
-                            .. [[ fi ]]
-                    },
+                        preview = preview_cmd,                    },
                     bcommits = {
                         actions = {
                             ["ctrl-e"] = {
