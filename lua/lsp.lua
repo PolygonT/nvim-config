@@ -76,6 +76,8 @@ vim.lsp.config("clangd", {
 
 vim.lsp.enable('clangd')
 
+vim.lsp.enable('gdscript')
+
 -- lspconfig.clangd.setup{
 --     capabilities = capabilities,
 --     -- cmd = { "D:/software/clangd_19.1.2/bin/clangd" }
