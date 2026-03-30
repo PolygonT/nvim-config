@@ -109,7 +109,7 @@ return {
                 git = {
                     commits = {
                         cmd = [[git log --graph --color --pretty=format:"%C(yellow)%h%Creset ]]
-                            .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
+                            .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(dim white)<%an>%Creset"]],
                         actions = {
                             ["ctrl-e"] = {
                                 fn = diff_view,
@@ -121,7 +121,8 @@ return {
                             return line:match("[a-z0-9]+")
                         end,
                         -- preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
-                        preview = preview_cmd,                    },
+                        preview = preview_cmd,
+                    },
                     bcommits = {
                         actions = {
                             ["ctrl-e"] = {
@@ -132,7 +133,7 @@ return {
 
                     },
                     branches = {
-                        preview = [[git log --graph --pretty=format:"%C(yellow)%h %C(green)%ad %C(reset)%s %C(blue)%an%C(reset)" --date=format:"(%Y-%m-%d %H:%M)" --abbrev-commit --color {1}]]
+                        preview = [[git log --graph --pretty=format:"%C(yellow)%h %C(green)%ad %C(reset)%s %C(dim white)%an%C(reset)" --date=format:"(%Y-%m-%d %H:%M)" --abbrev-commit --color {1}]]
                     },
 
                 }

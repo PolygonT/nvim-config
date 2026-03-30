@@ -4,7 +4,6 @@ return {
     {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = function ()
-            
             if vim.loop.os_uname().sysname ~= "Windows_NT" then
                 return 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
             else
