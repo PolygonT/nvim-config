@@ -82,7 +82,7 @@ return {
         config = function()
             vim.g.everforest_background = "hard"
             vim.g.everforest_transparent_background = 1
-            -- vim.cmd [[ set background=dark ]]
+            -- vim.cmd [[ set background=light ]]
             vim.cmd [[ colorscheme everforest" ]]
         end
     },
@@ -98,6 +98,27 @@ return {
 
     -- img clip
     'HakonHarnes/img-clip.nvim',
+
+    -- img clip
+    -- {
+    --     "HakonHarnes/img-clip.nvim",
+    --     event = "VeryLazy",
+    --     opts = {
+    --         default = {
+    --             relative_template_path = false, ---@type boolean | fun(): boolean
+    --             template = function(context)
+    --                 return "![" .. context.cursor .. "](/" .. context.file_path .. ")"
+    --             end
+    --         },
+    --         filetypes = {
+    --             markdown = {
+    --                 template = function(context)
+    --                     return "![" .. context.cursor .. "](/" .. context.file_path .. ")"
+    --                 end
+    --             }
+    --         },
+    --     },
+    -- },
 
     -- translate
 	'uga-rosa/translate.nvim',
