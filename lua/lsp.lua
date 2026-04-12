@@ -217,6 +217,7 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
         callback = function(ev)
             -- Enable completion triggered by <c-x><c-o>
             vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+            local fzf_lua = require('fzf-lua')
 
             -- Buffer local mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -224,7 +225,8 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+            -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+            vim.keymap.set('n', 'grr', fzf_lua.lsp_references, opts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
             -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
@@ -236,9 +238,7 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
             -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
             -- vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-            vim.keymap.set({ 'n', 'v' }, '<leader>ca', function()
-                require('fzf-lua').lsp_code_actions {}
-            end, opts)
+            vim.keymap.set({ 'n', 'v' }, '<leader>ca', fzf_lua.lsp_code_actions, opts)
             -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
             -- vim.keymap.set('n', '<space>f', function()
             --   vim.lsp.buf.format { async = true }
@@ -364,7 +364,7 @@ else
             local fzf = require('fzf-lua')
             vim.keymap.set('n', 'gD', fzf.lsp_declarations, opts)
             vim.keymap.set('n', 'gd', fzf.lsp_definitions, opts)
-            vim.keymap.set('n', 'gr', fzf.lsp_references, opts)
+            vim.keymap.set('n', 'grr', fzf.lsp_references, opts)
             vim.keymap.set('n', 'gi', fzf.lsp_implementations, opts)
             vim.keymap.set('n', 'gt', fzf.lsp_typedefs, opts)
 
@@ -383,7 +383,7 @@ else
             -- end, opts)
             -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-            vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+            vim.keymap.set({ 'n', 'v' }, '<leader>ca', fzf.lsp_code_actions, opts)
             -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
             -- vim.keymap.set('n', '<space>f', function()
             --   vim.lsp.buf.format { async = true }
