@@ -9,6 +9,7 @@ return {
         config = function()
             local fzf = require('fzf-lua')
             -- local actions = require('fzf-lua.actions')
+            fzf.register_ui_select()
 
             vim.keymap.set('n', '<leader>pf', fzf.files, {})
             -- vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
@@ -136,7 +137,14 @@ return {
                         preview = [[git log --graph --pretty=format:"%C(yellow)%h %C(green)%ad %C(reset)%s %C(dim white)%an%C(reset)" --date=format:"(%Y-%m-%d %H:%M)" --abbrev-commit --color {1}]]
                     },
 
-                }
+                },
+                lsp = {
+                    code_actions = {
+                        -- need install git-delta first ```sudo apt install git-delta`
+                        previewer = "codeaction_native",
+                        preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style=omit --file-style=omit",
+                    }
+                },
             }
         end
     }

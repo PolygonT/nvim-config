@@ -235,7 +235,10 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
             -- end, opts)
             -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-            vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+            -- vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+            vim.keymap.set({ 'n', 'v' }, '<leader>ca', function()
+                require('fzf-lua').lsp_code_actions {}
+            end, opts)
             -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
             -- vim.keymap.set('n', '<space>f', function()
             --   vim.lsp.buf.format { async = true }
