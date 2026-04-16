@@ -165,6 +165,7 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
 
     vim.lsp.config("gdscript", {
         cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--useMirroredNetworking", "--experimentalFastPathConversion"}
+        -- cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--host", "host.docker.internal", "--experimentalFastPathConversion"}
     })
     vim.lsp.enable('gdscript')
 

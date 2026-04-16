@@ -3,7 +3,7 @@ return {
     {
         "PolygonT/harpoon",
         branch = "feat_assign",
-        denpendencies = { 
+        denpendencies = {
             {"nvim-lua/plenary.nvim"},
             {'nvim-telescope/telescope.nvim'}
         },
@@ -33,7 +33,7 @@ return {
             end
 
 
-            vim.keymap.set("n", "<C-a>", function() harpoon:list():assign_to_idx(1) end)
+            -- vim.keymap.set("n", "<C-a>", function() harpoon:list():assign_to_idx(1) end)
             vim.keymap.set("n", "zip", function() harpoon:list():assign_to_idx(1) end)
             vim.keymap.set("n", "zis", function() harpoon:list():assign_to_idx(2) end)
             vim.keymap.set("n", "zit", function() harpoon:list():assign_to_idx(3) end)
