@@ -1,13 +1,13 @@
 if vim.loop.os_uname().sysname ~= "Windows_NT" then
     require("config.lazy")
     require("remap")
-    require("lsp")
+    -- require("lsp")
     require("globals")
 else
     require("remap")
     require("globals")
     require("config.lazy")
-    require("lsp")
+    -- require("lsp")
 end
 
 vim.opt.nu = true
