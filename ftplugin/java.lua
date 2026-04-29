@@ -3,7 +3,7 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
 local workspace_dir = '/home/wenhaoxiong/software/jdtls/workspace/' .. project_name
 
-local home = os.getenv('HOME')
+-- local home = os.getenv('HOME')
 
 local config = {
     name = "jdtls",

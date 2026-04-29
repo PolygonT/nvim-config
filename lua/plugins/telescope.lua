@@ -20,7 +20,7 @@ return {
     -- telescope
     {
         'nvim-telescope/telescope.nvim', version = '*',
-        dependencies = { 
+        dependencies = {
             {'nvim-lua/plenary.nvim'}
         },
 

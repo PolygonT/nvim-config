@@ -32,11 +32,11 @@ if vim.loop.os_uname().sysname ~= "Windows_NT" then
                             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
                         end,
                         stopAtEntry = true,
-                        setupCommands = {  
-                            { 
+                        setupCommands = {
+                            {
                                 text = '-enable-pretty-printing',
                                 description =  'enable pretty printing',
-                                ignoreFailures = false 
+                                ignoreFailures = false
                             },
                         },
                     }
@@ -93,11 +93,11 @@ else
                         cwd = '${workspaceFolder}',
                         stopAtEntry = true,
                         runInTerminal = true,
-                        setupCommands = {  
-                            { 
+                        setupCommands = {
+                            {
                                 text = '-enable-pretty-printing',
                                 description =  'enable pretty printing',
-                                ignoreFailures = false 
+                                ignoreFailures = false
                             },
                         },
                     },
