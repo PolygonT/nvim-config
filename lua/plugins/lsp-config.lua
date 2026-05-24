@@ -3,6 +3,8 @@ return {
 	'neovim/nvim-lspconfig',
 	dependencies = { 'saghen/blink.cmp' },
 	config = function()
+
+        local home_dir = os.getenv("HOME")
         -- wired glsl error
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
@@ -125,7 +127,7 @@ return {
                 settings = {
                     Lua = {},
                 },
-                cmd = { "/home/wenhaoxiong/software/language_server/lua_ls/bin/lua-language-server"},
+                -- cmd = { "/home/wenhaoxiong/software/language_server/lua_ls/bin/lua-language-server"},
             })
             vim.lsp.enable('lua_ls')
 
@@ -171,17 +173,17 @@ return {
                         end, {})
                     end
                 end,
-                cmd = { "clangd-19"}
+                -- cmd = { "clangd-19"}
                 -- cmd = { "/home/wenhaoxiong/develop/language_server/clangd_19.1.2/bin/clangd" }
                 -- cmd = { "/home/wenhaoxiong/develop/language_server/ccls/Release/ccls" }
             })
 
             vim.lsp.enable('clangd')
 
-            vim.lsp.config("gdscript", {
-                cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--useMirroredNetworking", "--experimentalFastPathConversion"}
-                -- cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--host", "host.docker.internal", "--experimentalFastPathConversion"}
-            })
+            -- vim.lsp.config("gdscript", {
+            --     cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--useMirroredNetworking", "--experimentalFastPathConversion"}
+            --     -- cmd = { "/home/wenhaoxiong/software/godot-wsl-lsp-1.4.0/bin/godot-wsl-lsp", "--host", "host.docker.internal", "--experimentalFastPathConversion"}
+            -- })
             vim.lsp.enable('gdscript')
 
             -- vim.lsp.config('glsl_analyzer', {
@@ -190,6 +192,14 @@ return {
             -- })
             -- vim.lsp.enable('glsl_analyzer')
             -- vim.lsp.enable('glslls')
+
+            -- xml language server lemminx
+            vim.lsp.config("lemminx", {
+                capabilities = capabilities,
+                cmd = { home_dir .. "/develop/language_server/xml/lemminx-osx-aarch_64"},
+            })
+
+            vim.lsp.enable('lemminx')
 
 
 
