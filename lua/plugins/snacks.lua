@@ -52,5 +52,6 @@ return {
         scroll = { enabled = true },
         statuscolumn = { enabled = false },
         words = { enabled = false },
+        image = { enabled = true },
     },
 }

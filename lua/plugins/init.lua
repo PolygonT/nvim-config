@@ -127,7 +127,7 @@ return {
         opts = {
             -- options
         },
-    }
+    },
 
 
     -- {

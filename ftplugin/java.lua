@@ -1,7 +1,7 @@
 -- See `:help vim.lsp.start` for an overview of the supported `config` options.
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-
-local workspace_dir = '/home/wenhaoxiong/software/jdtls/workspace/' .. project_name
+local home_dir = os.getenv("HOME")
+local workspace_dir = home_dir .. '/software/jdtls/workspace/' .. project_name
 
 -- local home = os.getenv('HOME')
 
@@ -17,7 +17,7 @@ local config = {
     -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
     cmd = {
 
-        'java', -- or '/path/to/java17_or_newer/bin/java'
+        home_dir .. '/develop/java/jdk-21.0.10.jdk/Contents/Home/bin/java', -- or '/path/to/java17_or_newer/bin/java'
         -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
         '-Declipse.application=org.eclipse.jdt.ls.core.id1',
@@ -29,17 +29,17 @@ local config = {
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        '-javaagent:/home/wenhaoxiong/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar',
+        '-javaagent:'.. home_dir .. '/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar',
 
         -- 💀
-        '-jar', '/home/wenhaoxiong/develop/language_server/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar',
+        '-jar', home_dir .. '/develop/language_server/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar',
         -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
         -- Must point to the                                                     Change this to
         -- eclipse.jdt.ls installation                                           the actual version
 
 
         -- 💀
-        '-configuration', '/home/wenhaoxiong/develop/language_server/jdtls/config_linux/',
+        '-configuration', home_dir .. '/develop/language_server/jdtls/config_linux/',
         -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
         -- Must point to the                      Change to one of `linux`, `win` or `mac`
         -- eclipse.jdt.ls installation            Depending on your system.
@@ -68,15 +68,15 @@ local config = {
                 runtimes = {
                     {
                         name = "JavaSE-1.8",
-                        path = "/home/wenhaoxiong/develop/java/jdk1.8.0_202/",
+                        path = home_dir .. "/develop/java/jdk-1.8/Contents/Home/",
                     },
                     {
                         name = "JavaSE-17",
-                        path = "/home/wenhaoxiong/develop/java/jdk-17.0.12/",
+                        path = home_dir .. "/develop/java/jdk-17.0.12.jdk/Contents/Home/",
                     },
                     {
                         name = "JavaSE-21",
-                        path = "/home/wenhaoxiong/develop/java/jdk-21.0.10/",
+                        path = home_dir .. "/develop/java/jdk-21.0.10.jdk/Contents/Home/",
                     },
                 }
             }
@@ -94,6 +94,12 @@ local config = {
     init_options = {
         bundles = {}
     },
+
+    on_attach = function()
+        vim.keymap.set('n', '<leader>pa', function()
+            require('jdtls').extract_variable()
+        end)
+    end
 }
 
 require('jdtls').start_or_attach(config)
