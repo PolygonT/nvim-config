@@ -11,7 +11,15 @@ return {
             -- local actions = require('fzf-lua.actions')
             fzf.register_ui_select()
 
-            vim.keymap.set('n', '<leader>pf', fzf.files, {})
+            local function get_visual_selection()
+                local saved_reg = vim.fn.getreg('"')
+                vim.cmd('noautocmd normal! "vy')
+                local sel = vim.fn.getreg('v')
+                vim.fn.setreg('"', saved_reg)
+                return (sel:gsub('\n', ' '):gsub('^%s+', ''):gsub('%s+$', ''))
+            end
+
+            vim.keymap.set('n', '<leader>pf', fzf.git_files, {})
             -- vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
             vim.keymap.set('n', '<leader>psf', fzf.git_files, {})
             -- vim.keymap.set('n', '<leader>pc', fzf.current_buffer_fuzzy_find, {})
@@ -23,6 +31,9 @@ return {
             vim.keymap.set('n', '<leader>pid', fzf.git_status, {})
             vim.keymap.set('n', '<leader>pib', fzf.git_branches, {})
             vim.keymap.set('n', '<leader>pis', fzf.git_stash, {})
+
+            vim.keymap.set('v', '<leader>pf', function() fzf.files({ query = get_visual_selection() }) end, {})
+            vim.keymap.set('v', '<leader>pg', fzf.grep_visual, {})
 
             local diff_view = function(selected, opts)
                 if not selected[1] then return end
@@ -136,7 +147,21 @@ return {
                     branches = {
                         preview = [[git log --graph --pretty=format:"%C(yellow)%h %C(green)%ad %C(reset)%s %C(dim white)%an%C(reset)" --date=format:"(%Y-%m-%d %H:%M)" --abbrev-commit --color {1}]]
                     },
+                    files = {
+                        actions = {
+                            ['ctrl-g'] = function(_, opts)
+                                require('fzf-lua').files({ query = opts.last_query, cwd = opts.cwd })
+                            end,
+                        },
+                    },
 
+                },
+                files = {
+                    actions = {
+                        ['ctrl-g'] = function(_, opts)
+                            require('fzf-lua').git_files({ query = opts.last_query, cwd = opts.cwd })
+                        end,
+                    },
                 },
                 lsp = {
                     code_actions = {

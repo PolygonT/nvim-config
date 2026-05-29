@@ -202,6 +202,36 @@ return {
             vim.lsp.enable('lemminx')
 
 
+            -- vue & ts language server
+            local vue_language_server_path = '/Users/wenhaoxiong/.nvm/versions/node/v24.16.0/lib/node_modules/@vue/language-server'
+            local tsserver_filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
+            local vue_plugin = {
+                name = '@vue/typescript-plugin',
+                location = vue_language_server_path,
+                languages = { 'vue' },
+                configNamespace = 'typescript',
+            }
+            local vtsls_config = {
+                settings = {
+                    vtsls = {
+                        tsserver = {
+                            globalPlugins = {
+                                vue_plugin,
+                            },
+                        },
+                    },
+                },
+                filetypes = tsserver_filetypes,
+            }
+
+            -- If you are on most recent `nvim-lspconfig`
+            local vue_ls_config = {}
+            -- nvim 0.11 or above
+            vim.lsp.config('vtsls', vtsls_config)
+            vim.lsp.config('vue_ls', vue_ls_config)
+            vim.lsp.enable({'vtsls', 'vue_ls'}) -- If using `ts_ls` replace `vtsls` to `ts_ls`
+
+
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -422,3 +452,5 @@ return {
     end
 
 }
+
+
