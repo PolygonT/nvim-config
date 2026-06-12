@@ -19,7 +19,7 @@ return {
                 return (sel:gsub('\n', ' '):gsub('^%s+', ''):gsub('%s+$', ''))
             end
 
-            vim.keymap.set('n', '<leader>pf', fzf.git_files, {})
+            vim.keymap.set('n', '<leader>pf', fzf.files, {})
             -- vim.keymap.set('n', '<leader>pg', fzf.live_grep, {})
             vim.keymap.set('n', '<leader>psf', fzf.git_files, {})
             -- vim.keymap.set('n', '<leader>pc', fzf.current_buffer_fuzzy_find, {})
@@ -38,15 +38,36 @@ return {
             local diff_view = function(selected, opts)
                 if not selected[1] then return end
 
-                local commit_hash
-                if type(opts.fn_match_commit_hash) == "function" then
-                    commit_hash = opts.fn_match_commit_hash(selected[1], opts)
-                else
-                    commit_hash = selected[1]:match("[^ ]+")
+                local function hash_of(entry)
+                    if type(opts.fn_match_commit_hash) == "function" then
+                        return opts.fn_match_commit_hash(entry, opts)
+                    end
+                    return entry:match("[^ ]+")
                 end
 
-                vim.cmd("DiffviewOpen " .. commit_hash .. "^!")
+                -- collect the commit hash of every marked entry
+                local hashes = {}
+                for _, entry in ipairs(selected) do
+                    local h = hash_of(entry)
+                    if h and #h > 0 then hashes[#hashes + 1] = h end
+                end
+                if #hashes == 0 then return end
 
+                -- single commit -> just that commit's own diff
+                if #hashes == 1 then
+                    vim.cmd("DiffviewOpen " .. hashes[1] .. "^!")
+                    return
+                end
+
+                -- range select -> cumulative diff of the whole span:
+                -- oldest commit's parent .. newest commit. Order by commit time
+                -- so it works regardless of the order entries were marked in.
+                local ct = {}
+                for _, h in ipairs(hashes) do
+                    ct[h] = tonumber(vim.fn.system({ "git", "show", "-s", "--format=%ct", h })) or 0
+                end
+                table.sort(hashes, function(a, b) return ct[a] < ct[b] end)
+                vim.cmd(("DiffviewOpen %s^..%s"):format(hashes[1], hashes[#hashes]))
             end
 
             local preview_cmd
@@ -60,6 +81,71 @@ return {
                 .. [[ fi ]]
             else
                 preview_cmd = [[ powershell -Command "$line = '{}'; if ($line -match '[a-f0-9]{7,}') { git show --color $matches[0] } else { echo 'Not a commit line' }" ]]
+            end
+
+            -- Custom *builtin* previewer for git commits: runs `git show | delta`
+            -- in a terminal preview buffer, keeping delta's colors. <C-t> toggles
+            -- the preview between the full diff and the changed-file list.
+            local builtin_prev = require("fzf-lua.previewer.builtin")
+            local GitCommitPreviewer = builtin_prev.buffer_or_file:extend()
+
+            -- toggled from the picker (see on_create below): true = list of
+            -- changed files (`git show --stat`, default), false = full diff.
+            local commits_show_stat = true
+
+            function GitCommitPreviewer:parse_entry(entry_str)
+                local hash = entry_str:match("[a-f0-9]+")
+                if not hash then
+                    return { content = { "Not a commit line" } }
+                end
+                -- delta emits ansi even when piped, but can't auto-detect width
+                -- without a tty, so pass the preview window width explicitly.
+                local width = 80
+                local win = self.win and self.win.preview_winid
+                if win and vim.api.nvim_win_is_valid(win) then
+                    width = vim.api.nvim_win_get_width(win)
+                end
+                -- --stat-width/--stat-name-width keep git from eliding folder
+                -- names with `.../` so full paths show in the file-list view.
+                local sh_cmd = ("git show --color=always %s %s | delta --%s --navigate --paging=never --width=%d")
+                    :format(
+                        commits_show_stat and "--stat --stat-width=200 --stat-name-width=200" or "",
+                        hash, vim.o.bg, width)
+                -- post-process the diffstat: tint the filename (part before ` | `,
+                -- \e[38;2;R;G;Bm truecolor #7fbbb3 teal) and drop the +/- histogram
+                -- after the change count.
+                if commits_show_stat then
+                    sh_cmd = sh_cmd ..
+                        [[ | perl -pe 's/^( +)([^|]+\S)( +\| )/$1\e[38;2;127;187;179m$2\e[0m$3/; s/(\| +\d+) .*$/$1/']]
+                end
+                -- non-pty `cmd` is run via vim.system -> must be a LIST, so wrap the
+                -- pipe in `sh -c`. Streamed through nvim_open_term (ansi colors, no
+                -- terminal job / no "[Process exited]" banner).
+                return { cmd = { "sh", "-c", sh_cmd } }
+            end
+
+            function GitCommitPreviewer:gen_winopts()
+                return vim.tbl_extend("keep", { wrap = false, number = false }, self.winopts)
+            end
+
+            -- Toggle the preview between full diff and file-list, driven from the
+            -- fzf prompt (no focus switch). Flips the flag then re-renders the
+            -- current entry via the live previewer on the FzfWin singleton.
+            local function toggle_filelist()
+                commits_show_stat = not commits_show_stat
+                local win = require("fzf-lua.win").__SELF()
+                if win and win._previewer then
+                    win._previewer:display_last_entry()
+                end
+            end
+
+            function GitCommitPreviewer:preview_buf_post(entry, min_winopts)
+                GitCommitPreviewer.super.preview_buf_post(self, entry, min_winopts)
+                -- terminal bufs leave the cursor at the bottom; start at the top
+                local pwin = self.win and self.win.preview_winid
+                if pwin and vim.api.nvim_win_is_valid(pwin) then
+                    pcall(vim.api.nvim_win_set_cursor, pwin, { 1, 0 })
+                end
             end
 
             fzf.setup{
@@ -90,8 +176,8 @@ return {
                         ["<S-down>"]    = "preview-page-down",
                         ["<S-up>"]      = "preview-page-up",
                         -- <C-d> <ctrl-d>每个地方不同，混用会导致问题
-                        ["<C-d>"]  = "preview-down",
-                        ["<C-u>"]    = "preview-up",
+                        ["<C-d>"]  = "preview-half-page-down",
+                        ["<C-u>"]    = "preview-half-page-up",
                         -- ["<M-down>"]  = "preview-down",
                         -- ["<M-up>"]    = "preview-up",
                     },
@@ -122,18 +208,32 @@ return {
                     commits = {
                         cmd = [[git log --graph --color --pretty=format:"%C(yellow)%h%Creset ]]
                             .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(dim white)<%an>%Creset"]],
+                        -- enable multi-select (default is --no-multi): mark a range
+                        -- of commits with Tab/S-Tab, then ctrl-e diffs the span.
+                        fzf_opts = { ["--multi"] = true, ["--no-multi"] = false },
                         actions = {
                             ["ctrl-e"] = {
                                 fn = diff_view,
-                                desc = "diff-view"
+                                desc = "diff-view (range)"
                             },
                             ["ctrl-d"] = false,
                         },
                         fn_match_commit_hash = function(line, _)
                             return line:match("[a-z0-9]+")
                         end,
-                        -- preview = [[ echo {} | grep -oE "[a-f0-9]{7,}" | head -1 | xargs git show --color ]],
-                        preview = preview_cmd,
+                        -- builtin previewer (real buffer) rendering delta output.
+                        previewer = { _ctor = function() return GitCommitPreviewer end },
+                        winopts = {
+                            -- <C-t> in the picker toggles the preview between the
+                            -- full diff and the changed-file list (git show --stat).
+                            on_create = function(e)
+                                -- fires once per picker open -> default to the
+                                -- file-list view each time, regardless of last toggle.
+                                commits_show_stat = true
+                                vim.keymap.set("t", "<C-t>", toggle_filelist,
+                                    { buffer = e.bufnr, nowait = true })
+                            end,
+                        },
                     },
                     bcommits = {
                         actions = {
