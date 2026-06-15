@@ -198,8 +198,8 @@ return {
                         ["f4"]          = "toggle-preview",
                         ["shift-down"]  = "preview-page-down",
                         ["shift-up"]    = "preview-page-up",
-                        ["ctrl-d"]  = "preview-down",
-                        ["ctrl-u"]    = "preview-up",
+                        ["ctrl-d"]  = "preview-half-page-down",
+                        ["ctrl-u"]    = "preview-half-page-up",
                     },
                 },
                 -- SPECIFIC COMMAND/PICKER OPTIONS, SEE BELOW
