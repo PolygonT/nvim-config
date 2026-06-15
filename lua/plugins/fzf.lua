@@ -70,19 +70,6 @@ return {
                 vim.cmd(("DiffviewOpen %s^..%s"):format(hashes[1], hashes[#hashes]))
             end
 
-            local preview_cmd
-
-            if vim.loop.os_uname().sysname ~= "Windows_NT" then
-                preview_cmd = [[ hash=$(echo {} | grep -oE "[a-f0-9]{7,}" | head -1); ]]
-                .. [[ if [ -z "$hash" ]; then ]]
-                .. [[ echo "Not a commit line"; ]]
-                .. [[ else ]]
-                .. [[ git show --color "$hash"; ]]
-                .. [[ fi ]]
-            else
-                preview_cmd = [[ powershell -Command "$line = '{}'; if ($line -match '[a-f0-9]{7,}') { git show --color $matches[0] } else { echo 'Not a commit line' }" ]]
-            end
-
             -- Custom *builtin* previewer for git commits: runs `git show | delta`
             -- in a terminal preview buffer, keeping delta's colors. <C-t> toggles
             -- the preview between the full diff and the changed-file list.
