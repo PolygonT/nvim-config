@@ -2,9 +2,11 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
         denpendencies = "nvim-treesitter/nvim-treesitter",
+        commit = "5ca4aaa6efdcc59be46b95a3e876300cfead05ef",
     },
     {
         'nvim-treesitter/nvim-treesitter',
+        commit = "cf12346a3414fa1b06af75c79faebe7f76df080a",
         build = ":TSUpdate",
         config = function ()
             local configs = require("nvim-treesitter.configs")
@@ -214,6 +216,7 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
+        commit = "b0c45cefe2c8f7b55fc46f34e563bc428ef99636",
         event = "VeryLazy",
         opts = {
             max_lines = 0,

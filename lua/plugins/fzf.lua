@@ -85,25 +85,33 @@ return {
                 if not hash then
                     return { content = { "Not a commit line" } }
                 end
-                -- delta emits ansi even when piped, but can't auto-detect width
-                -- without a tty, so pass the preview window width explicitly.
-                local width = 80
-                local win = self.win and self.win.preview_winid
-                if win and vim.api.nvim_win_is_valid(win) then
-                    width = vim.api.nvim_win_get_width(win)
-                end
-                -- --stat-width/--stat-name-width keep git from eliding folder
-                -- names with `.../` so full paths show in the file-list view.
-                local sh_cmd = ("git show --color=always %s %s | delta --%s --navigate --paging=never --width=%d")
-                    :format(
-                        commits_show_stat and "--stat --stat-width=200 --stat-name-width=200" or "",
-                        hash, vim.o.bg, width)
-                -- post-process the diffstat: tint the filename (part before ` | `,
-                -- \e[38;2;R;G;Bm truecolor #7fbbb3 teal) and drop the +/- histogram
-                -- after the change count.
-                if commits_show_stat then
-                    sh_cmd = sh_cmd ..
-                        [[ | perl -pe 's/^( +)([^|]+\S)( +\| )/$1\e[38;2;127;187;179m$2\e[0m$3/; s/(\| +\d+) .*$/$1/']]
+                local sh_cmd
+                if commits_show_stat and vim.fn.executable("python3") == 1 then
+                    -- file-list view: commit header+message, then a colored tree
+                    -- (dirs/+/-/collapsed chains) rendered by scripts/git_stat_tree.py.
+                    -- (`-s` shows the message; `--numstat --format=` feeds the tree.)
+                    local script = vim.fn.stdpath("config") .. "/scripts/git_stat_tree.py"
+                    sh_cmd = ("git show -s --color=always %s; echo; git show --numstat --format= %s | python3 %s")
+                        :format(hash, hash, vim.fn.shellescape(script))
+                else
+                    -- delta emits ansi even when piped, but can't auto-detect width
+                    -- without a tty, so pass the preview window width explicitly.
+                    local width = 80
+                    local win = self.win and self.win.preview_winid
+                    if win and vim.api.nvim_win_is_valid(win) then
+                        width = vim.api.nvim_win_get_width(win)
+                    end
+                    -- --stat-width/--stat-name-width keep git from eliding folder
+                    -- names with `.../` so full paths show (fallback flat list).
+                    sh_cmd = ("git show --color=always %s %s | delta --%s --navigate --paging=never --width=%d")
+                        :format(
+                            commits_show_stat and "--stat --stat-width=200 --stat-name-width=200" or "",
+                            hash, vim.o.bg, width)
+                    -- tint filename (before ` | `) teal and drop the +/- histogram
+                    if commits_show_stat then
+                        sh_cmd = sh_cmd ..
+                            [[ | perl -pe 's/^( +)([^|]+\S)( +\| )/$1\e[38;2;127;187;179m$2\e[0m$3/; s/(\| +\d+) .*$/$1/']]
+                    end
                 end
                 -- non-pty `cmd` is run via vim.system -> must be a LIST, so wrap the
                 -- pipe in `sh -c`. Streamed through nvim_open_term (ansi colors, no
