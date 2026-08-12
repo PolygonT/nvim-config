@@ -25,3 +25,8 @@ vim.keymap.set("t", "<C-t>", "<C-\\><C-n>")
 vim.keymap.set("n", "<C-j>", "<cmd>cnext<cr>")
 vim.keymap.set("n", "<C-k>", "<cmd>cprev<cr>")
 
+-- open file in browser
+vim.keymap.set("n", "<leader>os", function()
+    vim.ui.open(vim.api.nvim_buf_get_name(0))
+end, { desc = "Open file with default app" })
+
