@@ -47,6 +47,10 @@ return {
                 end
                 pcall(vim.treesitter.start, buf, lang)
                 vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                -- the parser may have just been installed asynchronously, so
+                -- re-pick the fold strategy instead of leaving this buffer on
+                -- the "no parser" indent fallback
+                require("config.fold").refresh(buf)
             end
 
             -- replaces the old `auto_install = true`

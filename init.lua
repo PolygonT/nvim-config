@@ -30,25 +30,13 @@ vim.opt.backup = false
 vim.opt.undofile = true
 
 -- ==========folding==============
-vim.o.foldmethod = "expr"
--- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.o.foldmethod = "indent"
+-- 'foldmethod'/'foldexpr' are no longer set globally: the strategy is picked
+-- per filetype. See lua/config/fold.lua for the mechanism and the defaults,
+-- and after/ftplugin/<ft>.lua for the per-filetype overrides.
+require("config.fold")
 vim.o.foldlevel = 99
-vim.keymap.set("n", "zm", function()
-    if vim.o.foldlevel == 0 then
-        vim.o.foldlevel = 99
-    else
-        vim.o.foldlevel = 0
-    end
-end)
---
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = { "cpp", "c", "h", "hpp" },
---     callback = function()
---         vim.opt_local.foldmethod = "indent"
---     end
--- })
+-- toggle between "all open" and this filetype's collapsed level
+vim.keymap.set("n", "zm", require("config.fold").toggle)
 -- ===============================
 --
 -- auto read
