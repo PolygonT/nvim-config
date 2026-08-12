@@ -84,9 +84,10 @@ function M.use(strategy, opts)
         wo.foldtext = "foldtext()"
     end
 
-    if opts.level then
-        wo.foldlevel = opts.level
-    end
+    -- always set it: without an explicit value the buffer would inherit
+    -- whatever the window happens to be at, e.g. a level some other file left
+    -- behind after `zm`. Falling back to the global keeps "opens expanded".
+    wo.foldlevel = opts.level or vim.go.foldlevel
     -- only overwrite when given, so the LspAttach upgrade below (which calls
     -- use("lsp") with no opts) keeps the value the ftplugin picked
     if opts.close_level then

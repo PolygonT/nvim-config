@@ -1,3 +1,8 @@
--- Headings are the fold structure, so use it as an outline: only level-1
--- headings expanded by default. `zm` still toggles everything open.
-require("config.fold").use("treesitter", { level = 1 })
+-- Sections are the fold structure: an `#` section is level 1, `##` level 2,
+-- and so on. No `level`, so the file opens fully expanded.
+--
+-- close_level = 1 because a document with a single top-level `#` is one big
+-- level-1 fold -- collapsing to 0 would fold the whole file into one line.
+-- 1 keeps the `#` heading and its intro visible and folds the `##` sections,
+-- which is the outline you actually want. Use 2 to keep `##` open too.
+require("config.fold").use("treesitter", { close_level = 1 })
