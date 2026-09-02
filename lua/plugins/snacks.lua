@@ -52,6 +52,16 @@ return {
         scroll = { enabled = true },
         statuscolumn = { enabled = false },
         words = { enabled = false },
-        image = { enabled = true },
+        image = {
+            enabled = true,
+            doc = {
+                inline = false, -- 不在正文里内联渲染，避免打乱排版
+                float = true,   -- 光标停在图片链接上时弹浮窗
+                max_width = 60,
+                max_height = 30,
+            },
+            -- LaTeX 公式交给 render-markdown.nvim，避免两边重复渲染
+            math = { enabled = false },
+        },
     },
 }

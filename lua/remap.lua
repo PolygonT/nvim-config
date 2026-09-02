@@ -21,9 +21,16 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 -- escape terminal mode
 vim.keymap.set("t", "<C-t>", "<C-\\><C-n>")
 
--- quickfix list remap
-vim.keymap.set("n", "<C-j>", "<cmd>cnext<cr>")
-vim.keymap.set("n", "<C-k>", "<cmd>cprev<cr>")
+-- quickfix / location list remap
+-- uses the location list when the current window has one, else the quickfix list
+local function list_jump(cmd)
+    return function()
+        pcall(vim.cmd, (#vim.fn.getloclist(0) > 0 and "l" or "c") .. cmd)
+    end
+end
+
+vim.keymap.set("n", "<C-j>", list_jump("next"), { desc = "Next quickfix/location item" })
+vim.keymap.set("n", "<C-k>", list_jump("prev"), { desc = "Prev quickfix/location item" })
 
 -- open file in browser
 vim.keymap.set("n", "<leader>os", function()

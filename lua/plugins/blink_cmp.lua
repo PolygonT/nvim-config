@@ -47,6 +47,10 @@ return {
                 ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
 
+            -- the snippet source (and snippet expansion) goes through LuaSnip,
+            -- so `lua/plugins/snippets.lua` snippets show up in the menu
+            snippets = { preset = 'luasnip' },
+
             appearance = {
                 -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                 -- Adjusts spacing to ensure icons are aligned
@@ -88,8 +92,16 @@ return {
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
 
-                -- disabling shell completion
                 providers = {
+                    snippets = {
+                        -- rank the postfix snippets (`.foreach`, `.fori`) first
+                        -- and preview what they expand to
+                        transform_items = function (ctx, items)
+                            return require("config.snippets").transform_items(ctx, items)
+                        end,
+                    },
+
+                    -- disabling shell completion
                     cmdline = {
                         enabled = function ()
                             return vim.fn.getcmdline():sub(1, 1) ~= '!'

@@ -201,6 +201,30 @@ return {
 
             vim.lsp.enable('lemminx')
 
+            -- -- roslyn (C#): apphost 只认 DOTNET_ROOT，不看 PATH；
+            -- -- 而 roslyn-language-server 包装器又会按 PATH 里 dotnet 的目录
+            -- -- 重新设置子进程的 DOTNET_ROOT。homebrew 的 /opt/homebrew/bin/dotnet
+            -- -- 只是个 shim（同级没有 shared/），所以两者都要指到真正的 .NET 根目录。
+            -- do
+            --     local dotnet = vim.fn.exepath('dotnet')
+            --     if dotnet ~= '' then
+            --         local root = vim.fs.dirname(vim.fn.resolve(dotnet))
+            --         if vim.fn.isdirectory(root .. '/shared') == 0 then
+            --             -- homebrew: <cellar>/bin/dotnet -> <cellar>/libexec
+            --             root = vim.fs.dirname(root) .. '/libexec'
+            --         end
+            --         if vim.fn.isdirectory(root .. '/shared') == 1
+            --             and vim.fn.executable(root .. '/dotnet') == 1 then
+            --             vim.env.DOTNET_ROOT = root
+            --             vim.env.PATH = root .. ':' .. vim.env.PATH
+            --         end
+            --     end
+            -- end
+            --
+            -- vim.lsp.enable('roslyn_ls')
+
+            vim.lsp.enable('markdown_oxide')
+
 
             -- vue & ts language server
             local vue_language_server_path = '/Users/wenhaoxiong/.nvm/versions/node/v24.16.0/lib/node_modules/@vue/language-server'
