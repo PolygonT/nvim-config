@@ -95,6 +95,13 @@ local config = {
         bundles = {}
     },
 
+    -- Neovim nightly advertises completion.dynamicRegistration = true, so jdtls
+    -- registers completion dynamically and leaves server_capabilities.completionProvider
+    -- nil. blink.cmp only picks clients with a static completionProvider, so turn it off.
+    capabilities = vim.tbl_deep_extend('force', require('blink.cmp').get_lsp_capabilities(), {
+        textDocument = { completion = { dynamicRegistration = false } },
+    }),
+
     on_attach = function()
         vim.keymap.set('n', '<leader>pa', function()
             require('jdtls').extract_variable()
