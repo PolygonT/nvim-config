@@ -148,6 +148,14 @@ return {
                 -- fzf_bin = ...,
                 -- each of these options can also be passed as function that return options table
                 -- e.g. winopts = function() return { ... } end
+                winopts = {
+                    preview = {
+                        -- 滚动条每次都用 nvim_win_text_height 算整个 buffer 的高度；
+                        -- markdown 被 render-markdown 渲染过（conceallevel=3 + conceal/virt 行）
+                        -- 再回到它时，这一次调用要 1.6s+，上下切换就会卡住
+                        scrollbar = false,
+                    },
+                },
                 keymap = {
                     -- Below are the default binds, setting any value in these tables will override
                     -- the defaults, to inherit from the defaults change [1] from `false` to `true`
